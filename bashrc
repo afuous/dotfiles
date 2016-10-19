@@ -7,7 +7,6 @@
 
 alias ls='ls --color=auto'
 #PS1='[\u@\h \W]\$ '
-source /usr/share/nvm/init-nvm.sh
 
 prompt_command() {
 	local branch=`git branch 2> /dev/null | grep '*' | cut -c 3-`
@@ -30,3 +29,6 @@ export EDITOR="$VISUAL"
 alias hs='runhaskell'
 alias clip='xclip -sel clip'
 alias chrome='google-chrome-stable'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
