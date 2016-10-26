@@ -10,17 +10,17 @@ alias ls='ls --color=auto'
 source /usr/share/nvm/init-nvm.sh
 
 prompt_command() {
-	local branch=`git branch 2> /dev/null | grep '*' | cut -c 3-`
+	local branch=$(git branch 2> /dev/null | grep '*' | cut -c 3-)
 	if [[ ! -z "$branch" ]]; then
-		if [[ ! -z `git status | grep '^Changes to be committed:$'` ]]; then
+		if [[ ! -z $(git status | grep '^Changes to be committed:$') ]]; then
 			branch="$branch+"
 		fi
-		if [[ ! -z `git status | grep '^Changes not staged for commit:$'` ]]; then
+		if [[ ! -z $(git status | grep '^Changes not staged for commit:$') ]]; then
 			branch="$branch*"
 		fi
 		branch="($branch) "
 	fi
-	PS1='['"$branch"'$(basename $(dirname "$PWD"))/$(basename "$PWD")]$ '
+	PS1="[${branch}$(basename $(dirname "$PWD"))/$(basename "$PWD")]$ "
 }
 PROMPT_COMMAND=prompt_command
 
