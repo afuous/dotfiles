@@ -1,9 +1,6 @@
 " autocmd VimEnter * echo 'hello'
 
-if empty(glob("~/.vim/bundle/Vundle.vim"))
-	command GetVundle :!mkdir -p ~/.vim/bundle; cd ~/.vim/bundle; git clone https://github.com/VundleVim/Vundle.vim
-else
-	command PluginStuff :!cd ~/.vim/bundle/YouCompleteMe; ./install.py
+if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	set nocompatible
 	filetype off
 	set rtp+=~/.vim/bundle/Vundle.vim
@@ -38,9 +35,9 @@ au Filetype javascript,cpp set expandtab softtabstop=4
 au Filetype lisp set expandtab shiftwidth=2
 au Filetype markdown set expandtab shiftwidth=4 softtabstop=4
 
-command Tabs set noexpandtab tabstop=4 shiftwidth=4
-command Spaces2 set expandtab softtabstop=2 shiftwidth=2
-command Spaces4 set expandtab softtabstop=4 shiftwidth=4
+command! Tabs set noexpandtab tabstop=4 shiftwidth=4
+command! Spaces2 set expandtab softtabstop=2 shiftwidth=2
+command! Spaces4 set expandtab softtabstop=4 shiftwidth=4
 
 filetype plugin indent on
 set smartindent
