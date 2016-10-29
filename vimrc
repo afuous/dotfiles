@@ -13,9 +13,9 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	Plugin 'mxw/vim-jsx'
 	let g:jsx_ext_required = 0
 	Plugin 'dart-lang/dart-vim-plugin'
-	"Plugin 'lambdatoast/elm.vim'
+	" Plugin 'lambdatoast/elm.vim'
 	Plugin 'ElmCast/elm-vim'
-	Plugin 'tpope/vim-commentary'
+	Plugin 'tomtom/tcomment_vim'
 	call vundle#end()
 endif
 
