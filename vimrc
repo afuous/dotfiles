@@ -15,6 +15,10 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	Plugin 'dart-lang/dart-vim-plugin'
 	" Plugin 'lambdatoast/elm.vim'
 	Plugin 'ElmCast/elm-vim'
+	let g:elm_setup_keybindings = 0
+	let g:ycm_semantic_triggers = {
+		\ 'elm' : ['.'],
+		\ }
 	Plugin 'tomtom/tcomment_vim'
 	call vundle#end()
 endif
@@ -34,6 +38,7 @@ au Filetype haskell,cabal,lhaskell set expandtab shiftwidth=2 softtabstop=2
 au Filetype javascript,cpp set expandtab softtabstop=4
 au Filetype lisp set expandtab shiftwidth=2
 au Filetype markdown set expandtab shiftwidth=4 softtabstop=4
+au Filetype elm set expandtab shiftwidth=4 softtabstop=4
 
 command! Tabs set noexpandtab tabstop=4 shiftwidth=4
 command! Spaces2 set expandtab softtabstop=2 shiftwidth=2
@@ -70,15 +75,16 @@ nnoremap <C-l> gt
 nnoremap j gj
 nnoremap k gk
 nnoremap <cr> o<esc>
+au filetype elm nnoremap <leader>f :ElmFormat<enter>
 
 colorscheme desert
 
 au BufNewFile,BufRead * setlocal formatoptions-=cro
 
 au BufReadPost *
-			\ if line("'\"") > 0 && line("'\"") <= line("$") |
-			\ 	exe "normal! g'\"" |
-			\ endif
+	\ if line("'\"") > 0 && line("'\"") <= line("$") |
+	\ 	exe "normal! g'\"" |
+	\ endif
 
 "let b:comment=""
 "function Comment()
