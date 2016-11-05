@@ -11,10 +11,10 @@ alias ls='ls --color=auto'
 prompt_command() {
 	local branch=$(git branch 2> /dev/null | grep '*' | cut -c 3-)
 	if [[ ! -z "$branch" ]]; then
-		if [[ ! -z $(git status | grep '^Changes to be committed:$') ]]; then
+		if [[ ! -z $(git status 2> /dev/null | grep '^Changes to be committed:$') ]]; then
 			branch="$branch+"
 		fi
-		if [[ ! -z $(git status | grep '^Changes not staged for commit:$') ]]; then
+		if [[ ! -z $(git status 2> /dev/null | grep '^Changes not staged for commit:$') ]]; then
 			branch="$branch*"
 		fi
 		branch="($branch) "
