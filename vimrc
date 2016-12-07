@@ -39,6 +39,7 @@ au Filetype javascript,cpp set expandtab softtabstop=4
 au Filetype lisp set expandtab shiftwidth=2
 au Filetype markdown set expandtab shiftwidth=4 softtabstop=4
 au Filetype elm set expandtab shiftwidth=4 softtabstop=4
+au Filetype dart set expandtab shiftwidth=2 softtabstop=2
 
 command! Tabs set noexpandtab tabstop=4 shiftwidth=4
 command! Spaces2 set expandtab softtabstop=2 shiftwidth=2

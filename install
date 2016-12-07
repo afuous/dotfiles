@@ -2,7 +2,7 @@
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-files="bashrc vimrc tmux.conf irbrc"
+files="bashrc vimrc tmux.conf irbrc inputrc"
 
 for file in $files; do
 	if [[ -f ~/.$file ]]; then
