@@ -80,6 +80,9 @@ au filetype elm nnoremap <leader>f :ElmFormat<enter>
 
 colorscheme desert
 
+set colorcolumn=81
+highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
+
 au BufNewFile,BufRead * setlocal formatoptions-=cro
 
 au BufReadPost *
