@@ -9,7 +9,7 @@ alias ls='ls --color=auto'
 #PS1='[\u@\h \W]\$ '
 
 color() {
-	echo "\e[$1m$2\e[m"
+	echo "\[\e[$1m\]$2\[\e[m\]"
 }
 
 prompt_command() {
