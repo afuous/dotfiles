@@ -5,7 +5,7 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 files="bashrc vimrc tmux.conf irbrc inputrc"
 
 for file in $files; do
-	if [[ -f ~/.$file ]]; then
+	if [ -e ~/.$file ]; then
 		mkdir -p ~/dotfiles-old
 		mv ~/.$file ~/dotfiles-old/$file
 	fi
