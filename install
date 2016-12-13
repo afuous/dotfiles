@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 files="bashrc vimrc tmux.conf irbrc inputrc"
 
 for file in $files; do
-	if [ -e ~/.$file ]; then
+	if [ -f ~/.$file ]; then
 		mkdir -p ~/dotfiles-old
 		mv ~/.$file ~/dotfiles-old/$file
 	fi
