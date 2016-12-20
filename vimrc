@@ -61,6 +61,7 @@ nnoremap ; :
 vnoremap ; :
 nnoremap , i_<esc>r
 nnoremap <leader>w J
+nnoremap <leader>e $
 nnoremap J 8j
 nnoremap K 8k
 vnoremap <leader>a :w !xclip -sel clip<enter><enter>
