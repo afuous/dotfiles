@@ -39,7 +39,18 @@ export EDITOR="$VISUAL"
 
 alias hs='runhaskell'
 alias clip='xclip -sel clip'
+alias clippng='xclip -sel clip -t image/png'
 alias chrome='google-chrome-stable'
+
+function go() {
+	if [ -f "$@" ]; then
+		vim "$@"
+	elif [ -d "$@" ]; then
+		cd "$@"
+	else
+		echo "$@ is not a file nor a directory"
+	fi
+}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm

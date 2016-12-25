@@ -1,0 +1,4 @@
+[global_config]
+[keybindings]
+  next_tab = <Primary><Shift>l
+  prev_tab = <Primary><Shift>h

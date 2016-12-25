@@ -44,6 +44,7 @@ au Filetype dart set expandtab shiftwidth=2 softtabstop=2
 command! Tabs set noexpandtab tabstop=4 shiftwidth=4
 command! Spaces2 set expandtab softtabstop=2 shiftwidth=2
 command! Spaces4 set expandtab softtabstop=4 shiftwidth=4
+command! Spaces8 set expandtab softtabstop=8 shiftwidth=8
 
 filetype plugin indent on
 set smartindent
