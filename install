@@ -1,8 +1,22 @@
 #!/bin/bash
 
+# usages:
+# ./install
+# ./install term
+# ./install gui
+
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-files="bashrc vimrc tmux.conf irbrc inputrc i3 i3status.conf terminator"
+termfiles="bashrc vimrc tmux.conf irbrc inputrc"
+guifiles="i3 i3status.conf terminator"
+
+if [ $# -eq 0 ]; then
+	files="$termfiles $guifiles"
+elif [ "$1" == "term" ]; then
+	files="$termfiles"
+elif [ "$1" == "gui" ]; then
+	files="$guifiles"
+fi
 
 for file in $files; do
 	if [ -e ~/.$file ]; then
