@@ -46,6 +46,8 @@ command! Spaces2 set expandtab softtabstop=2 shiftwidth=2
 command! Spaces4 set expandtab softtabstop=4 shiftwidth=4
 command! Spaces8 set expandtab softtabstop=8 shiftwidth=8
 
+command! WriteSudo w !sudo cat > %
+
 filetype plugin indent on
 set smartindent
 

@@ -10,7 +10,6 @@ map l nextTab
 unmap i
 unmap d
 unmap u
-unmap <a-m>
 map <c-F> LinkHints.activateModeToOpenIncognito
 map <c-k> passNextKey
 map <c-z> previousTab
@@ -21,6 +20,7 @@ map <a-x> scrollDown
 map <a-z> scrollUp
 map <a-X> scrollPageDown
 map <a-Z> scrollPageUp
+unmap <a-m>
 map <c-m> toggleMuteTab
 ```
 

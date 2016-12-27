@@ -1,7 +1,5 @@
 #!/bin/env python2
 
-# written on 12-23-2016 from 5AM to 7AM by Ben Heller
-
 # http://askubuntu.com/a/451402
 
 import glib

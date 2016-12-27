@@ -30,7 +30,12 @@ prompt_command() {
 	fi
 	local path="$(basename $(dirname "$PWD"))/$(basename "$PWD")"
 	path=$(color "$cyan" "$path")
-	PS1="$(color "$white" "[")${branch}${path}$(color "$white" "]$") "
+	if [[ $EUID -eq 0 ]]; then
+		chr="#"
+	else
+		chr="$"
+	fi
+	PS1="$(color "$white" "[")${branch}${path}$(color "$white" "]${chr}") "
 }
 PROMPT_COMMAND=prompt_command
 
