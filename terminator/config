@@ -2,3 +2,20 @@
 [keybindings]
   next_tab = <Primary><Shift>l
   prev_tab = <Primary><Shift>h
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      profile = None
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    cursor_color = "#aaaaaa"
+    font = Mono 11
+    scrollback_lines = 1000000
+    use_system_font = False

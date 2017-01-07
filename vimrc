@@ -20,6 +20,7 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 		\ 'elm' : ['.'],
 		\ }
 	Plugin 'tomtom/tcomment_vim'
+	Plugin 'ntpeters/vim-better-whitespace'
 	call vundle#end()
 endif
 
@@ -65,8 +66,6 @@ vnoremap ; :
 nnoremap , i_<esc>r
 nnoremap <leader>w J
 nnoremap <leader>e $
-nnoremap J 8j
-nnoremap K 8k
 vnoremap <leader>a :w !xclip -sel clip<enter><enter>
 " inoremap <C-j> <C-n>
 " vnoremap <leader>k :call Comment()<enter>
@@ -79,6 +78,12 @@ inoremap <C-l> <esc>gt
 nnoremap <C-l> gt
 nnoremap j gj
 nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+nnoremap J 8gj
+nnoremap K 8gk
+nnoremap gJ 8j
+nnoremap gK 8k
 nnoremap <cr> o<esc>
 au filetype elm nnoremap <leader>f :ElmFormat<enter>
 

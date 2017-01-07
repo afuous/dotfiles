@@ -1,29 +1,35 @@
 #!/bin/bash
 
 # usages:
-# ./install
+# ./install all
 # ./install term
 # ./install gui
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-termfiles="bashrc vimrc tmux.conf irbrc inputrc"
-guifiles="i3 i3status.conf terminator"
+termfiles='bashrc vimrc tmux.conf irbrc inputrc'
+guifiles='i3 i3status.conf terminator'
 
-if [ $# -eq 0 ]; then
+if [ "$1" == 'all' ]; then
 	files="$termfiles $guifiles"
-elif [ "$1" == "term" ]; then
+elif [ "$1" == 'term' ]; then
 	files="$termfiles"
-elif [ "$1" == "gui" ]; then
+elif [ "$1" == 'gui' ]; then
 	files="$guifiles"
 else
-	echo "Invalid parameter"
+	echo 'Invalid parameter'
 fi
 
 for file in $files; do
-	if [ -e ~/.$file ]; then
-		mkdir -p ~/dotfiles-old
-		mv ~/.$file ~/dotfiles-old
+	if [[ -d "$here/$file" ]]; then
+		dest=~/.config/$file
+	else
+		dest=~/.$file
 	fi
-	ln -s "$here/$file" ~/.$file
+	if [[ -e "$dest" ]]; then
+		mkdir -p ~/dotfiles-old
+		rm -rf ~/dotfiles-old/$file
+		mv "$dest" ~/dotfiles-old/$file
+	fi
+	ln -s "$here/$file" "$dest"
 done

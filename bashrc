@@ -6,7 +6,6 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-#PS1='[\u@\h \W]\$ '
 
 color() {
 	echo "\[\e[$1m\]$2\[\e[m\]"
@@ -47,8 +46,8 @@ alias clip='xclip -sel clip'
 alias clippng='xclip -sel clip -t image/png'
 alias chrome='google-chrome-stable'
 
-function go() {
-	if [ -f "$@" ]; then
+go() {
+	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then
 		vim "$@"
 	elif [ -d "$@" ]; then
 		cd "$@"

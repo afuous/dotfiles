@@ -48,6 +48,9 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+# bindsym $mod+z focus left
+# bindsym $mod+x focus right
+
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -67,10 +70,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+n split h
+# bindsym $mod+n split h
 
 # split in vertical orientation
-bindsym $mod+m split v
+# bindsym $mod+m split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -87,10 +90,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+# bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+# bindsym $mod+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -129,8 +132,7 @@ bindsym Shift+Print exec "scrot ~/TEMP_scrn.png && xclip -sel clip -t image/png 
 bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
 
 # open floating terminal
-# bindsym $mod+Shift+z exec "terminator -T Floating"
-bindsym Control+Mod1+z exec "terminator -T Floating"
+bindsym Control+Mod1+z exec "terminator -T Floating --geometry=900x600"
 for_window [class="Terminator" title="Floating"] floating enable
 
 # switch to previous workspace
@@ -146,6 +148,24 @@ bindsym $mod+Shift+a exec "~/dotfiles/bin/mute-spotify-ad.py"
 bindsym XF86AudioPlay exec "playerctl play-pause"
 bindsym XF86AudioPrev exec "playerctl previous"
 bindsym XF86AudioNext exec "playerctl next"
+
+# adjust screen brightness
+# https://www.reddit.com/r/linux/comments/268wcy/managing_brightness_on_i3wm/
+# requires light
+bindsym XF86MonBrightnessDown exec "if [[ $(echo $(light -G)'<5' | bc) -eq 0 ]]; then light -U 5; fi"
+bindsym XF86MonBrightnessUp exec light -A 5
+
+# lock screen
+# requires i3lock
+bindsym Control+Mod1+Mod4+l exec i3lock
+
+# go to next workspace
+# bindsym $mod+Tab workspace next
+# bindsym $mod+Shift+Tab workspace prev
+
+# scratchpad
+bindsym $mod+u move scratchpad
+bindsym $mod+i scratchpad show
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
