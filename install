@@ -8,7 +8,7 @@
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 termfiles='bashrc vimrc tmux.conf irbrc inputrc'
-guifiles='i3 i3status.conf terminator'
+guifiles='i3 i3status.conf terminator vrapperrc'
 
 if [ "$1" == 'all' ]; then
 	files="$termfiles $guifiles"

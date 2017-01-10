@@ -1,0 +1,15 @@
+nmap <space> <leader>
+vmap <space> <leader>
+inoremap jj <esc>
+inoremap JJ <esc>
+inoremap Jj <esc>
+inoremap jJ <esc>
+nnoremap ; :
+vnoremap ; :
+nnoremap , i_<esc>r
+nnoremap <leader>w J
+nnoremap H gT
+nnoremap L gt
+nnoremap J 8j
+nnoremap K 8k
+nnoremap <cr> o<esc>

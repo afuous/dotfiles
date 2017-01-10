@@ -72,10 +72,10 @@ vnoremap <leader>a :w !xclip -sel clip<enter><enter>
 " vnoremap <leader>l :call Uncomment()<enter>
 " nnoremap <leader>k :call Comment()<enter>
 " nnoremap <leader>l :call Uncomment()<enter>
-inoremap <C-h> <esc>gT
-nnoremap <C-h> gT
-inoremap <C-l> <esc>gt
-nnoremap <C-l> gt
+nnoremap H gT
+nnoremap L gt
+nnoremap <C-h> H
+nnoremap <C-l> L
 nnoremap j gj
 nnoremap k gk
 nnoremap gj j
