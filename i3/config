@@ -166,6 +166,7 @@ bindsym Control+Mod1+Mod4+l exec i3lock
 # scratchpad
 bindsym $mod+u move scratchpad
 bindsym $mod+i scratchpad show
+bindsym $mod+Tab scratchpad show
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

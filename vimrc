@@ -55,6 +55,9 @@ set smartindent
 set number
 set relativenumber
 
+set smartcase
+set scrolloff=10
+
 nmap <space> <leader>
 vmap <space> <leader>
 inoremap jj <esc>
@@ -65,7 +68,6 @@ nnoremap ; :
 vnoremap ; :
 nnoremap , i_<esc>r
 nnoremap <leader>w J
-nnoremap <leader>e $
 vnoremap <leader>a :w !xclip -sel clip<enter><enter>
 " inoremap <C-j> <C-n>
 " vnoremap <leader>k :call Comment()<enter>

@@ -5,8 +5,6 @@
 # ./install term
 # ./install gui
 
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 termfiles='bashrc vimrc tmux.conf irbrc inputrc'
 guifiles='i3 i3status.conf terminator vrapperrc'
 
@@ -20,6 +18,10 @@ else
 	echo 'Invalid parameter'
 fi
 
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+olddir="$here/dotfiles-old"
+
 for file in $files; do
 	if [[ -d "$here/$file" ]]; then
 		dest=~/.config/$file
@@ -27,9 +29,9 @@ for file in $files; do
 		dest=~/.$file
 	fi
 	if [[ -e "$dest" ]]; then
-		mkdir -p ~/dotfiles-old
-		rm -rf ~/dotfiles-old/$file
-		mv "$dest" ~/dotfiles-old/$file
+		mkdir -p "$olddir"
+		rm -rf "$olddir/$file"
+		mv "$dest" "$olddir/$file"
 	fi
 	ln -s "$here/$file" "$dest"
 done
