@@ -30,7 +30,7 @@ prompt_command() {
 	local path="$(basename $(dirname "$PWD"))/$(basename "$PWD")"
 	path=$(color "$cyan" "$path")
 	if [[ $EUID -eq 0 ]]; then
-		chr="#"
+		chr="$(color "$red" '#')"
 	else
 		chr="$"
 	fi
@@ -44,6 +44,7 @@ export EDITOR="$VISUAL"
 alias hs='runhaskell'
 alias clip='xclip -sel clip'
 alias clippng='xclip -sel clip -t image/png'
+alias pasteclip='xclip -o -sel clip'
 alias chrome='google-chrome-stable'
 
 go() {
