@@ -1,7 +1,8 @@
 [global_config]
 [keybindings]
-  next_tab = <Primary><Shift>l
-  prev_tab = <Primary><Shift>h
+  new_tab = None
+  next_tab = None
+  prev_tab = None
 [layouts]
   [[default]]
     [[[child1]]]

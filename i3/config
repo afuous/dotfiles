@@ -132,15 +132,16 @@ bindsym Shift+Print exec "scrot ~/TEMP_scrn.png && xclip -sel clip -t image/png 
 bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
 
 # open floating terminal
-bindsym Control+Mod1+z exec "terminator -T Floating --geometry=900x600"
-for_window [class="Terminator" title="Floating"] floating enable
+bindsym Control+Mod1+z exec "terminator -T Terminal --geometry=900x600"
+for_window [class="Terminator" title="Terminal"] floating enable
 
 # switch to previous workspace
 # https://www.reddit.com/r/i3wm/comments/3o2bdn/i3_how_to_quickly_switch_between_current_and/cvtgpiy/
 bindsym $mod+grave exec "i3-msg 'workspace back_and_forth'"
 
-# mute spotify ad
-bindsym $mod+Shift+a exec "~/dotfiles/bin/mute-spotify-ad.py"
+# copy lyrics link for spotify song
+# requires spotify-now
+bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics-spotify.sh | xclip -sel clip"
 
 # previous, next, and play/pause keys
 # requires playerctl
