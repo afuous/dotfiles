@@ -60,5 +60,6 @@ go() {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
-# if which tmux > /dev/null; then tmux 2> /dev/null && exit; fi
-tmux 2> /dev/null
+# if [[ $EUID -ne 0 ]]; then
+# 	tmux 2> /dev/null
+# fi

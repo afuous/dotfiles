@@ -13,7 +13,7 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 10
+font pango:monospace 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -70,18 +70,18 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-# bindsym $mod+n split h
+# bindsym $mod+Shift+n split h
 
 # split in vertical orientation
-# bindsym $mod+m split v
+# bindsym $mod+Shift+m split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -120,9 +120,13 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # audio stuff from https://faq.i3wm.org/question/125/how-to-change-the-systems-volume/
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +2%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -2%
+# cannotchangevol prevents buttons on side of laptop from changing volume
+bindsym XF86AudioRaiseVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 +2%"
+bindsym XF86AudioLowerVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 -2%"
+bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +2%
+bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -2%
 bindsym XF86AudioMute exec amixer -q set Master toggle
+bindsym Shift+XF86AudioMute exec "[[ -f ~/.cannotchangevol ]] && rm ~/.cannotchangevol || touch ~/.cannotchangevol"
 
 # screenshots with xclip and scrot
 # https://faq.i3wm.org/question/6659/bindsym-for-screenshot-partially-not-working/
@@ -131,13 +135,22 @@ bindsym --release Control+Print exec "scrot --select &"
 bindsym Shift+Print exec "scrot ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
 bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
 
+# set solid black desktop background
+exec --no-startup-id xsetroot -solid '#000000'
+
 # open floating terminal
-bindsym Control+Mod1+z exec "terminator -T Terminal --geometry=900x600"
-for_window [class="Terminator" title="Terminal"] floating enable
+bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=900x600; sleep 0.5; wmctrl -r Floating_Terminator -T Terminator; wmctrl -r Floating_Terminator -T Terminator"
+for_window [class="Terminator" title="Floating_Terminator"] floating enable
 
 # switch to previous workspace
 # https://www.reddit.com/r/i3wm/comments/3o2bdn/i3_how_to_quickly_switch_between_current_and/cvtgpiy/
 bindsym $mod+grave exec "i3-msg 'workspace back_and_forth'"
+bindsym $mod+o exec "i3-msg 'workspace back_and_forth'"
+
+bindsym $mod+n exec "i3-msg 'workspace prev'"
+bindsym $mod+m exec "i3-msg 'workspace next'"
+bindsym $mod+w exec "i3-msg 'workspace prev'"
+bindsym $mod+e exec "i3-msg 'workspace next'"
 
 # copy lyrics link for spotify song
 # requires spotify-now
@@ -174,30 +187,37 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym Control+Mod1+Mod4+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+    set $size 10
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    # hjkl make the window bigger, Shift+hjkl make the window smaller
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym h resize grow width $size px or $size ppt; move left
+    bindsym Shift+h resize shrink width $size px or $size ppt; move right
+
+    bindsym k resize grow height $size px or $size ppt; move up
+    bindsym Shift+k resize shrink height $size px or $size ppt; move down
+
+    bindsym j resize grow height $size px or $size ppt
+    bindsym Shift+j resize shrink height $size px or $size ppt
+
+    bindsym l resize grow width $size px or $size ppt
+    bindsym Shift+l resize shrink width $size px or $size ppt
+
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -205,7 +225,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    status_command i3status
 }
 
 focus_follows_mouse no

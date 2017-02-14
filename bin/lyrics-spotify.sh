@@ -1,6 +1,6 @@
 #!/bin/bash
 
-query="$(spotify-now -i '%title %artist' | sed -e 's/ /+/')"
+query="$(spotify-now -i '%title %artist' | sed -e 's/ /+/g')"
 
 url="http://search.azlyrics.com/search.php?q=$query"
 

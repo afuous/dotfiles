@@ -58,6 +58,8 @@ set relativenumber
 set smartcase
 set scrolloff=10
 
+set mouse=nicr
+
 nmap <space> <leader>
 vmap <space> <leader>
 inoremap jj <esc>

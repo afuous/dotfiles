@@ -29,6 +29,7 @@ map <a-z> scrollUp count=60
 map <a-X> scrollPageDown
 map <a-Z> scrollPageUp
 
+unmap <a-p>
 unmap <a-m>
 map <c-m> toggleMuteTab
 
