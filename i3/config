@@ -139,7 +139,7 @@ bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xc
 exec --no-startup-id xsetroot -solid '#000000'
 
 # open floating terminal
-bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=900x600; sleep 0.5; wmctrl -r Floating_Terminator -T Terminator; wmctrl -r Floating_Terminator -T Terminator"
+bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=900x600; sleep 4; wmctrl -r Floating_Terminator -T Terminator"
 for_window [class="Terminator" title="Floating_Terminator"] floating enable
 
 # switch to previous workspace
@@ -154,14 +154,16 @@ bindsym $mod+e exec "i3-msg 'workspace next'"
 
 # copy lyrics link for spotify song
 # requires spotify-now
-bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics-spotify.sh | xclip -sel clip"
+bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
+
+exec_always --no-startup-id ~/dotfiles/bin/check-music.sh
 
 # previous, next, and play/pause keys
 # requires playerctl
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
-bindsym XF86AudioPlay exec "playerctl play-pause"
-bindsym XF86AudioPrev exec "playerctl previous"
-bindsym XF86AudioNext exec "playerctl next"
+bindsym XF86AudioPlay exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
+bindsym XF86AudioPrev exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
+bindsym XF86AudioNext exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
 
 # adjust screen brightness
 # https://www.reddit.com/r/linux/comments/268wcy/managing_brightness_on_i3wm/
