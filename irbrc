@@ -22,6 +22,12 @@ class Numeric
 	end
 end
 
+class Integer
+	def fact
+		(1..self).reduce(1, :*)
+	end
+end
+
 def sin(a)
 	Math.sin(a)
 end
@@ -54,6 +60,10 @@ def sqrt(n)
 	Math.sqrt(n)
 end
 
+def log(n)
+	Math.log(n)
+end
+
 def vector(x, y)
 	magnitude = Math.sqrt(x ** 2 + y ** 2)
 	puts "Magnitude: #{magnitude}"
@@ -69,3 +79,4 @@ def vector(x, y)
 end
 
 PI = Math::PI
+E = Math::E

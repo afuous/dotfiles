@@ -10,6 +10,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod1
+set $super Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -50,6 +51,8 @@ bindsym $mod+l focus right
 
 bindsym $mod+c focus left
 bindsym $mod+v focus right
+bindsym $mod+Shift+c move left
+bindsym $mod+Shift+v move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -121,12 +124,17 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 # audio stuff from https://faq.i3wm.org/question/125/how-to-change-the-systems-volume/
 # cannotchangevol prevents buttons on side of laptop from changing volume
-bindsym XF86AudioRaiseVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 +2%"
-bindsym XF86AudioLowerVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 -2%"
-bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +2%
-bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -2%
-bindsym XF86AudioMute exec amixer -q set Master toggle
+bindsym XF86AudioRaiseVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 +10%"
+bindsym XF86AudioLowerVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 -10%"
+bindsym $mod+XF86AudioRaiseVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 +2%"
+bindsym $mod+XF86AudioLowerVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 -2%"
+bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
+bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
+bindsym $mod+Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +2%
+bindsym $mod+Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -2%
+bindsym XF86AudioMute exec "[[ -f ~/.cannotmute ]] || amixer -q set Master toggle"
 bindsym Shift+XF86AudioMute exec "[[ -f ~/.cannotchangevol ]] && rm ~/.cannotchangevol || touch ~/.cannotchangevol"
+bindsym $mod+Shift+XF86AudioMute exec "[[ -f ~/.cannotmute ]] && rm ~/.cannotmute ~/.cannotchangevol || touch ~/.cannotmute ~/.cannotchangevol"
 
 # screenshots with xclip and scrot
 # https://faq.i3wm.org/question/6659/bindsym-for-screenshot-partially-not-working/
@@ -139,18 +147,18 @@ bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xc
 exec --no-startup-id xsetroot -solid '#000000'
 
 # open floating terminal
-bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=900x600; sleep 4; wmctrl -r Floating_Terminator -T Terminator"
+bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=893x596; sleep 4; wmctrl -r Floating_Terminator -T Terminator"
 for_window [class="Terminator" title="Floating_Terminator"] floating enable
 
 # switch to previous workspace
 # https://www.reddit.com/r/i3wm/comments/3o2bdn/i3_how_to_quickly_switch_between_current_and/cvtgpiy/
-bindsym $mod+grave exec "i3-msg 'workspace back_and_forth'"
-bindsym $mod+o exec "i3-msg 'workspace back_and_forth'"
+bindsym $mod+grave workspace back_and_forth
+bindsym $mod+o workspace back_and_forth
 
-bindsym $mod+n exec "i3-msg 'workspace prev'"
-bindsym $mod+m exec "i3-msg 'workspace next'"
-bindsym $mod+w exec "i3-msg 'workspace prev'"
-bindsym $mod+e exec "i3-msg 'workspace next'"
+bindsym $mod+n workspace prev
+bindsym $mod+m workspace next
+bindsym $mod+w workspace prev
+bindsym $mod+e workspace next
 
 # copy lyrics link for spotify song
 # requires spotify-now
@@ -171,6 +179,17 @@ bindsym XF86AudioNext exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl n
 bindsym XF86MonBrightnessDown exec "if [[ $(echo $(light -G)'<5' | bc) -eq 0 ]]; then light -U 5; fi"
 bindsym XF86MonBrightnessUp exec light -A 5
 
+# rotate screen
+# http://askubuntu.com/a/95825
+bindsym Control+Mod1+Mod4+Up exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate normal"
+bindsym Control+Mod1+Mod4+Prior exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate normal"
+bindsym Control+Mod1+Mod4+Down exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate inverted"
+bindsym Control+Mod1+Mod4+Next exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate inverted"
+bindsym Control+Mod1+Mod4+Left exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate left"
+bindsym Control+Mod1+Mod4+Home exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate left"
+bindsym Control+Mod1+Mod4+Right exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate right"
+bindsym Control+Mod1+Mod4+End exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate right"
+
 # lock screen
 # requires i3lock
 bindsym Control+Mod1+Mod4+l exec i3lock
@@ -185,7 +204,7 @@ bindsym $mod+i scratchpad show
 bindsym $mod+Tab scratchpad show
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+t reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -195,27 +214,28 @@ bindsym Control+Mod1+Mod4+e exec "i3-nagbar -t warning -m 'You pressed the exit 
 mode "resize" {
 # These bindings trigger as soon as you enter the resize mode
 
-    set $size 10
+    set $hsize 9
+    set $vsize 18
 
     # hjkl make the window bigger, Shift+hjkl make the window smaller
 
-    bindsym h resize grow width $size px or $size ppt; move left
-    bindsym Shift+h resize shrink width $size px or $size ppt; move right
+    bindsym h resize grow width $hsize px or $hsize ppt; move left $hsize
+    bindsym Shift+h resize shrink width $hsize px or $hsize ppt; move right $hsize
 
-    bindsym k resize grow height $size px or $size ppt; move up
-    bindsym Shift+k resize shrink height $size px or $size ppt; move down
+    bindsym k resize grow height $vsize px or $vsize ppt; move up $vsize
+    bindsym Shift+k resize shrink height $vsize px or $vsize ppt; move down $vsize
 
-    bindsym j resize grow height $size px or $size ppt
-    bindsym Shift+j resize shrink height $size px or $size ppt
+    bindsym j resize grow height $vsize px or $vsize ppt
+    bindsym Shift+j resize shrink height $vsize px or $vsize ppt
 
-    bindsym l resize grow width $size px or $size ppt
-    bindsym Shift+l resize shrink width $size px or $size ppt
+    bindsym l resize grow width $hsize px or $hsize ppt
+    bindsym Shift+l resize shrink width $hsize px or $hsize ppt
 
     # same bindings, but for the arrow keys
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width $hsize px or $hsize ppt
+    bindsym Down resize grow height $vsize px or $vsize ppt
+    bindsym Up resize shrink height $vsize px or $vsize ppt
+    bindsym Right resize grow width $hsize px or $hsize ppt
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"

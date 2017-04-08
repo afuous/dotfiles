@@ -10,12 +10,14 @@ map h previousTab
 map l nextTab
 
 unmap i
+map <c-i> enterInsertMode
+map <c-k> passNextKey
+map i passNextKey
+
 unmap d
 unmap u
 
 map <c-F> LinkHints.activateModeToOpenIncognito
-
-map <c-k> passNextKey
 
 map <c-z> previousTab
 map <c-x> nextTab
@@ -29,7 +31,6 @@ map <a-z> scrollUp count=60
 map <a-X> scrollPageDown
 map <a-Z> scrollPageUp
 
-unmap <a-p>
 unmap <a-m>
 map <c-m> toggleMuteTab
 
