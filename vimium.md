@@ -19,17 +19,20 @@ unmap u
 
 map <c-F> LinkHints.activateModeToOpenIncognito
 
-map <c-z> previousTab
-map <c-x> nextTab
+unmap x
+unmap X
 
-map <c-Z> goBack
-map <c-X> goForward
+map Z previousTab
+map X nextTab
 
-map <a-x> scrollDown count=60
-map <a-z> scrollUp count=60
+map <a-Z> goBack
+map <a-X> goForward
 
-map <a-X> scrollPageDown
-map <a-Z> scrollPageUp
+map x scrollDown count=60
+map z scrollUp count=60
+
+map <a-x> scrollPageDown
+map <a-z> scrollPageUp
 
 unmap <a-m>
 map <c-m> toggleMuteTab

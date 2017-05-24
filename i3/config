@@ -45,7 +45,7 @@ bindsym $mod+d exec dmenu_run
 
 # change focus
 bindsym $mod+h focus left
-bindsym $mod+j focus down
+bindsrm $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
@@ -53,6 +53,8 @@ bindsym $mod+c focus left
 bindsym $mod+v focus right
 bindsym $mod+Shift+c move left
 bindsym $mod+Shift+v move right
+bindsym $mod+a focus up
+bindsym $mod+s focus down
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -71,6 +73,9 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# bindsym $mod+Shift+p exec i3-input
+# TODO: https://www.reddit.com/r/i3wm/comments/2v6ooc/scripting_a_grid_layout/cohtwag/
 
 # split in horizontal orientation
 # bindsym $mod+Shift+n split h
@@ -124,17 +129,22 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 # audio stuff from https://faq.i3wm.org/question/125/how-to-change-the-systems-volume/
 # cannotchangevol prevents buttons on side of laptop from changing volume
-bindsym XF86AudioRaiseVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 +10%"
-bindsym XF86AudioLowerVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 -10%"
-bindsym $mod+XF86AudioRaiseVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 +2%"
-bindsym $mod+XF86AudioLowerVolume exec "[[ -f ~/.cannotchangevol ]] || pactl set-sink-volume 0 -2%"
-bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
-bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
-bindsym $mod+Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +2%
-bindsym $mod+Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -2%
-bindsym XF86AudioMute exec "[[ -f ~/.cannotmute ]] || amixer -q set Master toggle"
-bindsym Shift+XF86AudioMute exec "[[ -f ~/.cannotchangevol ]] && rm ~/.cannotchangevol || touch ~/.cannotchangevol"
-bindsym $mod+Shift+XF86AudioMute exec "[[ -f ~/.cannotmute ]] && rm ~/.cannotmute ~/.cannotchangevol || touch ~/.cannotmute ~/.cannotchangevol"
+set $setvolume pactl set-sink-volume 0
+set $bigvol 10%
+set $smallvol 2%
+set $headphonesin [[ -z $(pactl list sinks | grep Headphones | grep 'not available') ]]
+set $isabovemaxvolume [[ $(echo $(pactl list sinks | grep '^\s*Volume:' | sed -e 's/^.*\s\([0-9]\+\)%.*$/\1/')'<40' | bc) -eq 0 ]]
+bindsym XF86AudioRaiseVolume exec [[ -f ~/.cannotchangevol ]] || $isabovemaxvolume && $headphonesin || $setvolume +$bigvol
+bindsym XF86AudioLowerVolume exec [[ -f ~/.cannotchangevol ]] || $setvolume -$bigvol
+bindsym $mod+XF86AudioRaiseVolume exec [[ -f ~/.cannotchangevol ]] || $isabovemaxvolume && $headphonesin || $setvolume +$smallvol
+bindsym $mod+XF86AudioLowerVolume exec [[ -f ~/.cannotchangevol ]] || $setvolume -$smallvol
+bindsym Shift+XF86AudioRaiseVolume exec $isabovemaxvolume && $headphonesin || $setvolume +$bigvol
+bindsym Shift+XF86AudioLowerVolume exec $setvolume -$bigvol
+bindsym $mod+Shift+XF86AudioRaiseVolume exec $isabovemaxvolume && $headphonesin || $setvolume +$smallvol
+bindsym $mod+Shift+XF86AudioLowerVolume exec $setvolume -$smallvol
+bindsym XF86AudioMute exec [[ -f ~/.cannotmute ]] || amixer -q set Master toggle
+bindsym Shift+XF86AudioMute exec [[ -f ~/.cannotchangevol ]] && rm ~/.cannotchangevol || touch ~/.cannotchangevol
+bindsym $mod+Shift+XF86AudioMute exec [[ -f ~/.cannotmute ]] && rm ~/.cannotmute ~/.cannotchangevol || touch ~/.cannotmute ~/.cannotchangevol
 
 # screenshots with xclip and scrot
 # https://faq.i3wm.org/question/6659/bindsym-for-screenshot-partially-not-working/
@@ -160,18 +170,29 @@ bindsym $mod+m workspace next
 bindsym $mod+w workspace prev
 bindsym $mod+e workspace next
 
+# make caps lock act like control and escape
+# both shifts at the same time toggle caps lock
+exec_always --no-startup-id "\
+	setxkbmap -layout us ;\
+	setxkbmap -option ;\
+	setxkbmap -option caps:ctrl_modifier ;\
+	setxkbmap -option shift:both_capslock ;\
+"
+# requires xcape
+exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
+
 # copy lyrics link for spotify song
 # requires spotify-now
 bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
 
-exec_always --no-startup-id ~/dotfiles/bin/check-music.sh
 
 # previous, next, and play/pause keys
 # requires playerctl
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
-bindsym XF86AudioPlay exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
-bindsym XF86AudioPrev exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
-bindsym XF86AudioNext exec "if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
+exec_always --no-startup-id ~/dotfiles/bin/check-music.sh
+bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && playerctl pause || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
+bindsym XF86AudioPrev exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
+bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
 
 # adjust screen brightness
 # https://www.reddit.com/r/linux/comments/268wcy/managing_brightness_on_i3wm/
@@ -181,22 +202,23 @@ bindsym XF86MonBrightnessUp exec light -A 5
 
 # rotate screen
 # http://askubuntu.com/a/95825
-bindsym Control+Mod1+Mod4+Up exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate normal"
-bindsym Control+Mod1+Mod4+Prior exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate normal"
-bindsym Control+Mod1+Mod4+Down exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate inverted"
-bindsym Control+Mod1+Mod4+Next exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate inverted"
-bindsym Control+Mod1+Mod4+Left exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate left"
-bindsym Control+Mod1+Mod4+Home exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate left"
-bindsym Control+Mod1+Mod4+Right exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate right"
-bindsym Control+Mod1+Mod4+End exec "xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate right"
+set $rotate xrandr --output $(xrandr -q | sed -e '2q;d' | awk '{print $1}') --rotate
+bindsym Control+Mod1+Mod4+Up exec "$rotate normal"
+bindsym Control+Mod1+Mod4+Prior exec "$rotate normal"
+bindsym Control+Mod1+Mod4+Down exec "$rotate inverted"
+bindsym Control+Mod1+Mod4+Next exec "$rotate inverted"
+bindsym Control+Mod1+Mod4+Left exec "$rotate left"
+bindsym Control+Mod1+Mod4+Home exec "$rotate left"
+bindsym Control+Mod1+Mod4+Right exec "$rotate right"
+bindsym Control+Mod1+Mod4+End exec "$rotate right"
 
 # lock screen
 # requires i3lock
 bindsym Control+Mod1+Mod4+l exec i3lock
 
-# go to next workspace
-# bindsym $mod+Tab workspace next
-# bindsym $mod+Shift+Tab workspace prev
+# automatically lock screen after a duration of inactivity
+# requires xautolock
+exec_always --no-startup-id xautolock -time 20 -locker i3lock
 
 # scratchpad
 bindsym $mod+u move scratchpad
