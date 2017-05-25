@@ -45,7 +45,7 @@ bindsym $mod+d exec dmenu_run
 
 # change focus
 bindsym $mod+h focus left
-bindsrm $mod+j focus down
+bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
