@@ -1,3 +1,5 @@
+require 'prime'
+
 class Numeric
 	def to_rad
 		self * Math::PI / 180
@@ -76,6 +78,22 @@ def vector(x, y)
 	end
 	angle *= 180 / Math::PI
 	puts "Angle: #{angle}"
+end
+
+def factor(n)
+	(1..n).select {|k| n % k == 0}
+end
+
+def expmod(a, n, p)
+	r = 1
+	while n != 0
+		if n % 2 == 1
+			r = (r * a) % p
+		end
+		n /= 2
+		a = (a * a) % p
+	end
+	r
 end
 
 PI = Math::PI

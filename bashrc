@@ -27,7 +27,7 @@ prompt_command() {
 		fi
 		branch="$(color "$white" "(")${branch}$(color "$white" ")") "
 	fi
-	local path="$(basename $(dirname "$PWD"))/$(basename "$PWD")"
+	local path="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
 	path=$(color "$cyan" "$path")
 	if [[ $EUID -eq 0 ]]; then
 		chr="$(color "$red" '#')"

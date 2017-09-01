@@ -146,6 +146,9 @@ bindsym XF86AudioMute exec [[ -f ~/.cannotmute ]] || amixer -q set Master toggle
 bindsym Shift+XF86AudioMute exec [[ -f ~/.cannotchangevol ]] && rm ~/.cannotchangevol || touch ~/.cannotchangevol
 bindsym $mod+Shift+XF86AudioMute exec [[ -f ~/.cannotmute ]] && rm ~/.cannotmute ~/.cannotchangevol || touch ~/.cannotmute ~/.cannotchangevol
 
+# toggle microphone mute
+bindsym $mod+b exec "amixer set Capture toggle"
+
 # screenshots with xclip and scrot
 # https://faq.i3wm.org/question/6659/bindsym-for-screenshot-partially-not-working/
 bindsym Print exec "scrot"
@@ -185,12 +188,12 @@ exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
 # requires spotify-now
 bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
 
-
 # previous, next, and play/pause keys
 # requires playerctl
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
 exec_always --no-startup-id ~/dotfiles/bin/check-music.sh
-bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && playerctl pause || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
+bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
+bindsym $mod+g exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
 bindsym XF86AudioPrev exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
 bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
 
@@ -218,7 +221,7 @@ bindsym Control+Mod1+Mod4+l exec i3lock
 
 # automatically lock screen after a duration of inactivity
 # requires xautolock
-exec_always --no-startup-id xautolock -time 20 -locker i3lock
+exec_always --no-startup-id xautolock -time 20 -locker ~/dotfiles/bin/lock-screen.sh
 
 # scratchpad
 bindsym $mod+u move scratchpad
@@ -269,7 +272,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3status
+    # status_command i3status
+    status_command ~/dotfiles/bin/status.py
 }
 
 focus_follows_mouse no
