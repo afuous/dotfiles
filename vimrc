@@ -21,6 +21,8 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 		\ }
 	Plugin 'tomtom/tcomment_vim'
 	Plugin 'ntpeters/vim-better-whitespace'
+	Plugin 'mattn/emmet-vim'
+	let g:user_emmet_leader_key='<C-f>'
 	call vundle#end()
 endif
 
@@ -32,21 +34,20 @@ au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead *.purs set filetype=haskell
 "au BufNewFile,BufRead *.elm set filetype=haskell
 
-set noexpandtab
-set tabstop=4
-set shiftwidth=4
-au Filetype haskell,cabal,lhaskell set expandtab shiftwidth=2 softtabstop=2
-au Filetype javascript,cpp set expandtab softtabstop=4
-au Filetype lisp set expandtab shiftwidth=2
-au Filetype markdown set expandtab shiftwidth=4 softtabstop=4
-au Filetype elm set expandtab shiftwidth=4 softtabstop=4
-au Filetype dart set expandtab shiftwidth=2 softtabstop=2
-
 command! Tabs set noexpandtab tabstop=4 shiftwidth=4
 command! Spaces2 set expandtab softtabstop=2 shiftwidth=2
 command! Spaces4 set expandtab softtabstop=4 shiftwidth=4
 command! Spaces8 set expandtab softtabstop=8 shiftwidth=8
 command! Tab8 set tabstop=8 shiftwidth=8
+
+Tabs
+au Filetype haskell,cabal,lhaskell Spaces2
+au Filetype cpp Spaces4
+au Filetype javascript,javascript.jsx Spaces2
+au Filetype lisp Spaces2
+au Filetype markdown set Spaces4
+au Filetype elm set Spaces4
+au Filetype dart set Spaces2
 
 command! WriteSudo w !sudo cat > %
 
@@ -83,12 +84,20 @@ nnoremap <C-h> H
 nnoremap <C-l> L
 nnoremap j gj
 nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 nnoremap gj j
 nnoremap gk k
+vnoremap gj j
+vnoremap gk k
 nnoremap J 8gj
 nnoremap K 8gk
+vnoremap J 8gj
+vnoremap K 8gk
 nnoremap gJ 8j
 nnoremap gK 8k
+vnoremap gJ 8j
+vnoremap gK 8k
 nnoremap <cr> o<esc>
 au filetype elm nnoremap <leader>f :ElmFormat<enter>
 

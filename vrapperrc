@@ -14,3 +14,5 @@ nnoremap J 8j
 nnoremap K 8k
 nnoremap <cr> o<esc>
 set scrolloff=10
+
+nnoremap rr :run<cr>

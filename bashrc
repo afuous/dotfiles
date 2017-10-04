@@ -63,3 +63,5 @@ export NVM_DIR="$HOME/.nvm"
 # if [[ $EUID -ne 0 ]]; then
 # 	tmux 2> /dev/null
 # fi
+
+export PATH="$HOME/.yarn/bin:$PATH"

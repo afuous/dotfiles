@@ -78,10 +78,10 @@ bindsym $mod+Shift+Right move right
 # TODO: https://www.reddit.com/r/i3wm/comments/2v6ooc/scripting_a_grid_layout/cohtwag/
 
 # split in horizontal orientation
-# bindsym $mod+Shift+n split h
+bindsym $mod+Shift+n split h
 
 # split in vertical orientation
-# bindsym $mod+Shift+m split v
+bindsym $mod+Shift+m split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -90,6 +90,12 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+Shift+e layout toggle split
+
+# HOW TO MAKE A 2 BY 2 SQUARE
+# 1. open 4 windows in a workspace horizontally
+# 2. go to the left one and the right one and 'split v' in each with alt+shift+m
+# 3. move the middle left to the left and the middle right to the right
+# works if windows are originally vertical and 'split h' is used instead
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -183,6 +189,9 @@ exec_always --no-startup-id "\
 "
 # requires xcape
 exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
+
+# requires networkmanager, nm-applet
+exec_always --no-startup-id "killall nm-applet; nm-applet"
 
 # copy lyrics link for spotify song
 # requires spotify-now

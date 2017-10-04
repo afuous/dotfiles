@@ -28,6 +28,9 @@ map X nextTab
 map <a-Z> goBack
 map <a-X> goForward
 
+map <c-Z> moveTabLeft
+map <c-X> moveTabRight
+
 map x scrollDown count=60
 map z scrollUp count=60
 
