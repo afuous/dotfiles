@@ -74,9 +74,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# bindsym $mod+Shift+p exec i3-input
-# TODO: https://www.reddit.com/r/i3wm/comments/2v6ooc/scripting_a_grid_layout/cohtwag/
-
 # split in horizontal orientation
 bindsym $mod+Shift+n split h
 
@@ -165,6 +162,9 @@ bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xc
 # set solid black desktop background
 exec --no-startup-id xsetroot -solid '#000000'
 
+# put spotify back in 3 for if it is restarted
+for_window [class="Spotify"] move container to workspace 3
+
 # open floating terminal
 bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=893x596; sleep 4; wmctrl -r Floating_Terminator -T Terminator"
 for_window [class="Terminator" title="Floating_Terminator"] floating enable
@@ -190,6 +190,9 @@ exec_always --no-startup-id "\
 # requires xcape
 exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
 
+# make tapping the trackpad not count as clicking
+exec_always --no-startup-id "synclient MaxTapTime=0"
+
 # requires networkmanager, nm-applet
 exec_always --no-startup-id "killall nm-applet; nm-applet"
 
@@ -211,6 +214,12 @@ bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.cu
 # requires light
 bindsym XF86MonBrightnessDown exec "if [[ $(echo $(light -G)'<5' | bc) -eq 0 ]]; then light -U 5; fi"
 bindsym XF86MonBrightnessUp exec light -A 5
+bindsym $mod+Shift+XF86MonBrightnessDown exec light -U 100
+
+bindsym Control+$mod+x exec --no-startup-id "google-chrome-stable --incognito"
+
+# you never really want to press alt f4 anyway
+bindsym Mod1+F4 exec true
 
 # rotate screen
 # http://askubuntu.com/a/95825

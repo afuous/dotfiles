@@ -6,7 +6,6 @@ inoremap Jj <esc>
 inoremap jJ <esc>
 nnoremap ; :
 vnoremap ; :
-nnoremap , i_<esc>r
 nnoremap <leader>w J
 nnoremap H gT
 nnoremap L gt
@@ -15,4 +14,4 @@ nnoremap K 8k
 nnoremap <cr> o<esc>
 set scrolloff=10
 
-nnoremap rr :run<cr>
+nnoremap rr :w<cr>:run<cr>

@@ -45,11 +45,13 @@ au Filetype haskell,cabal,lhaskell Spaces2
 au Filetype cpp Spaces4
 au Filetype javascript,javascript.jsx Spaces2
 au Filetype lisp Spaces2
-au Filetype markdown set Spaces4
-au Filetype elm set Spaces4
-au Filetype dart set Spaces2
+au Filetype markdown Spaces4
+au Filetype elm Spaces4
+au Filetype dart Spaces2
 
 command! WriteSudo w !sudo cat > %
+
+" command! DeleteSwapFile echo expand('%:t')
 
 filetype plugin indent on
 set smartindent
@@ -70,7 +72,7 @@ inoremap Jj <esc>
 inoremap jJ <esc>
 nnoremap ; :
 vnoremap ; :
-nnoremap , i_<esc>r
+" nnoremap , i_<esc>r
 nnoremap <leader>w J
 vnoremap <leader>a :w !xclip -sel clip<enter><enter>
 " inoremap <C-j> <C-n>
