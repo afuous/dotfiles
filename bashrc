@@ -46,6 +46,7 @@ alias clip='xclip -sel clip'
 alias clippng='xclip -sel clip -t image/png'
 alias pasteclip='xclip -o -sel clip'
 alias chrome='google-chrome-stable'
+alias latexopen='~/dotfiles/bin/latex-open.sh'
 
 go() {
 	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then

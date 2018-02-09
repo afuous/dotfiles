@@ -23,6 +23,9 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	Plugin 'ntpeters/vim-better-whitespace'
 	Plugin 'mattn/emmet-vim'
 	let g:user_emmet_leader_key='<C-f>'
+	Plugin 'tpope/vim-fireplace'
+	Plugin 'tpope/vim-classpath'
+	vnoremap <leader>f :Eval<cr>
 	call vundle#end()
 endif
 
@@ -64,6 +67,8 @@ set scrolloff=10
 
 set mouse=nicr
 
+set showcmd
+
 nmap <space> <leader>
 vmap <space> <leader>
 inoremap jj <esc>
@@ -101,7 +106,14 @@ nnoremap gK 8k
 vnoremap gJ 8j
 vnoremap gK 8k
 nnoremap <cr> o<esc>
+nnoremap <C-a> <nop>
+nnoremap <C-x> <nop>
 au filetype elm nnoremap <leader>f :ElmFormat<enter>
+
+au filetype tex inoremap <c-j> \
+" au filetype tex inoremap <c-h> {
+" au filetype tex inoremap <c-l> }
+au filetype tex inoremap ; $
 
 colorscheme desert
 
