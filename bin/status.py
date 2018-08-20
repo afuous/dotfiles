@@ -40,6 +40,12 @@ with os.popen('/usr/bin/i3status', mode='r') as status:
         #     elem['border'] = '#ff00ff'
         #     elem['background'] = '#ffff00'
 
+        light = subprocess.run(['light', '-G'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        arr.insert(0, {
+            'full_text': ' Light: ' + light.strip() + ' ',
+            'color': '#ffffff',
+        })
+
         mocp = str(subprocess.run(['mocp', '-i'], stdout=subprocess.PIPE).stdout)
         spotify = subprocess.run(['spotify-now', '-p', 'a'], stdout=subprocess.PIPE).stdout
         music = 'State: PLAY' in mocp or len(spotify) == 0

@@ -2,4 +2,4 @@
 
 playerctl pause
 mocp -P
-i3lock
+i3lock -c 444444

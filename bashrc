@@ -47,16 +47,18 @@ alias clippng='xclip -sel clip -t image/png'
 alias pasteclip='xclip -o -sel clip'
 alias chrome='google-chrome-stable'
 alias latexopen='~/dotfiles/bin/latex-open.sh'
+alias slatexopen='~/dotfiles/bin/synctex-latex-open.sh'
+alias gdb='gdb -q'
 
-go() {
-	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then
-		vim "$@"
-	elif [ -d "$@" ]; then
-		cd "$@"
-	else
-		echo "$@ is not a file nor a directory"
-	fi
-}
+# go() {
+# 	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then
+# 		vim "$@"
+# 	elif [ -d "$@" ]; then
+# 		cd "$@"
+# 	else
+# 		echo "$@ is not a file nor a directory"
+# 	fi
+# }
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm

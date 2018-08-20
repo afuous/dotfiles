@@ -106,6 +106,9 @@ bindsym $mod+Shift+o focus parent
 # focus the child container
 bindsym $mod+Shift+p focus child
 
+# change the window title
+bindsym $mod+Shift+y exec i3-input -F 'title_format "%s"'
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -185,7 +188,7 @@ exec_always --no-startup-id "\
 	setxkbmap -layout us ;\
 	setxkbmap -option ;\
 	setxkbmap -option caps:ctrl_modifier ;\
-	setxkbmap -option shift:both_capslock ;\
+	# setxkbmap -option shift:both_capslock ;\
 "
 # requires xcape
 exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
@@ -199,6 +202,11 @@ exec_always --no-startup-id "killall nm-applet; nm-applet"
 # copy lyrics link for spotify song
 # requires spotify-now
 bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
+
+# https://old.reddit.com/r/i3wm/comments/7svdfw/is_it_possible_to_create_a_bindsym_on_the_mod_key/
+# bindsym $super exec "xdotool click 1"
+# bindcode 133 exec "xdotool click 1"
+# bindcode 133 exec "xdotool mousemove 1500 1000 click 1"
 
 # previous, next, and play/pause keys
 # requires playerctl
@@ -219,7 +227,12 @@ bindsym $mod+Shift+XF86MonBrightnessDown exec light -U 100
 bindsym Control+$mod+x exec --no-startup-id "google-chrome-stable --incognito"
 
 # you never really want to press alt f4 anyway
-bindsym Mod1+F4 exec true
+bindsym Mod1+F4 exec :
+
+# annoying mouse buttons
+# does not work
+# bindsym button8 exec :
+# bindsym button9 exec :
 
 # rotate screen
 # http://askubuntu.com/a/95825
@@ -235,14 +248,14 @@ bindsym Control+Mod1+Mod4+End exec "$rotate right"
 
 # lock screen
 # requires i3lock
-bindsym Control+Mod1+Mod4+l exec i3lock
+bindsym Control+Mod1+Mod4+l exec ~/dotfiles/bin/lock-screen.sh
 
 # automatically lock screen after a duration of inactivity
 # requires xautolock
 exec_always --no-startup-id xautolock -time 20 -locker ~/dotfiles/bin/lock-screen.sh
 
 # scratchpad
-bindsym $mod+u move scratchpad
+bindsym $mod+Shift+u move scratchpad
 bindsym $mod+i scratchpad show
 bindsym $mod+Tab scratchpad show
 

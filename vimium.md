@@ -9,6 +9,11 @@ map K scrollPageUp
 map h previousTab
 map l nextTab
 
+map a scrollLeft
+map s scrollRight
+map A scrollToLeft
+map S scrollToRight
+
 unmap i
 map <c-i> enterInsertMode
 map <c-k> passNextKey

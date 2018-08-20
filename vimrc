@@ -26,6 +26,7 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	Plugin 'tpope/vim-fireplace'
 	Plugin 'tpope/vim-classpath'
 	vnoremap <leader>f :Eval<cr>
+	Plugin 'reedes/vim-pencil'
 	call vundle#end()
 endif
 
@@ -35,6 +36,7 @@ au BufNewFile,BufRead *.go set filetype=go
 au BufNewFile,BufRead *.ejs set filetype=html
 au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead *.purs set filetype=haskell
+au BufNewFile,BufRead *.idr set filetype=haskell
 "au BufNewFile,BufRead *.elm set filetype=haskell
 
 command! Tabs set noexpandtab tabstop=4 shiftwidth=4
@@ -110,10 +112,21 @@ nnoremap <C-a> <nop>
 nnoremap <C-x> <nop>
 au filetype elm nnoremap <leader>f :ElmFormat<enter>
 
+nnoremap <c-@> :echo 'hi'<cr>
+
 au filetype tex inoremap <c-j> \
 " au filetype tex inoremap <c-h> {
 " au filetype tex inoremap <c-l> }
 au filetype tex inoremap ; $
+au filetype tex nnoremap r; r$
+au filetype tex nnoremap <leader>; a;<esc>
+
+" https://gist.github.com/vext01/16df5bd48019d451e078
+function! SyncTex()
+	execute 'silent !zathura --synctex-forward ' . line('.') . ':' . col('.') . ':' . bufname('%') . ' ' . bufname('%')[:-5] . '.pdf'
+	redraw!
+endfunction
+nnoremap <leader>s :call SyncTex()<cr>
 
 colorscheme desert
 

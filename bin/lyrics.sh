@@ -8,7 +8,7 @@ fi
 
 query="$(echo "$query" | sed -e 's/ /+/g' | sed -e 's/Remastered\(+Version\)\?//g')"
 
-url="http://search.azlyrics.com/search.php?q=$query"
+url="https://search.azlyrics.com/search.php?q=$query"
 
 curl -s -H 'User-Agent:' "$url" \
 	| grep '<a href=' \

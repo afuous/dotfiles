@@ -1,4 +1,7 @@
 require 'prime'
+require 'matrix'
+
+$choose_memoize = {}
 
 class Numeric
 	def to_rad
@@ -19,8 +22,27 @@ class Numeric
 		Math.sqrt(self)
 	end
 
+	def cbrt
+		Math.cbrt(self)
+	end
+
 	def sqr
 		self * self
+	end
+
+	def r
+		self.to_r
+	end
+
+	def choose(k)
+		if k == 0 or k == self
+			return 1
+		end
+		if $choose_memoize.key?([self, k])
+			return $choose_memoize[[self, k]]
+		end
+		return $choose_memoize[[self, k]] = (self-1).choose(k-1) + (self-1).choose(k)
+		# (self-k+1..self).reduce(:*) / k.fact
 	end
 end
 
