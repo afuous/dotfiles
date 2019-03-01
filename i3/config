@@ -133,6 +133,8 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# use @DEFAULT_SINK@ for bluetooth
+
 # audio stuff from https://faq.i3wm.org/question/125/how-to-change-the-systems-volume/
 # cannotchangevol prevents buttons on side of laptop from changing volume
 set $setvolume pactl set-sink-volume 0
@@ -157,9 +159,10 @@ bindsym $mod+b exec "amixer set Capture toggle"
 
 # screenshots with xclip and scrot
 # https://faq.i3wm.org/question/6659/bindsym-for-screenshot-partially-not-working/
+# TODO: save to ~/screenshots
 bindsym Print exec "scrot"
-bindsym --release Control+Print exec "scrot --select &"
-bindsym Shift+Print exec "scrot ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
+# bindsym --release Control+Print exec "scrot --select &"
+# bindsym Shift+Print exec "scrot ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
 bindsym --release Control+Shift+Print exec "scrot --select ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
 
 # set solid black desktop background
@@ -198,6 +201,11 @@ exec_always --no-startup-id "synclient MaxTapTime=0"
 
 # requires networkmanager, nm-applet
 exec_always --no-startup-id "killall nm-applet; nm-applet"
+
+# requires onboard
+# check "start onboard hidden" in its settings
+# the killall is there since if you start another instance, onboard does not start hidden for some reason
+exec_always --no-startup-id "killall onboard; onboard"
 
 # copy lyrics link for spotify song
 # requires spotify-now

@@ -14,6 +14,8 @@ map s scrollRight
 map A scrollToLeft
 map S scrollToRight
 
+map <c-d> scrollDown
+
 unmap i
 map <c-i> enterInsertMode
 map <c-k> passNextKey
@@ -21,11 +23,17 @@ map i passNextKey
 
 unmap d
 unmap u
+unmap v
+unmap V
 
 map <c-F> LinkHints.activateModeToOpenIncognito
 
 unmap x
 unmap X
+unmap p
+unmap r
+unmap o
+unmap <a-p>
 
 map Z previousTab
 map X nextTab

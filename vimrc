@@ -5,8 +5,9 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	filetype off
 	set rtp+=~/.vim/bundle/Vundle.vim
 	call vundle#begin()
+
 	Plugin 'VundleVim/Vundle.vim'
-	Plugin 'Valloric/YouCompleteMe'
+	Plugin 'Valloric/YouCompleteMe' " TODO: replace with deoplete
 	Plugin 'scrooloose/nerdtree'
 	Plugin 'jistr/vim-nerdtree-tabs'
 	Plugin 'pangloss/vim-javascript'
@@ -27,6 +28,7 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	Plugin 'tpope/vim-classpath'
 	vnoremap <leader>f :Eval<cr>
 	Plugin 'reedes/vim-pencil'
+
 	call vundle#end()
 endif
 
@@ -64,12 +66,16 @@ set smartindent
 set number
 set relativenumber
 
+set ignorecase
 set smartcase
 set scrolloff=10
 
 set mouse=nicr
 
 set showcmd
+
+" prevent annoying preview window in autocompletion
+set completeopt-=preview
 
 nmap <space> <leader>
 vmap <space> <leader>
@@ -130,8 +136,8 @@ nnoremap <leader>s :call SyncTex()<cr>
 
 colorscheme desert
 
-set colorcolumn=80
-highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
+" set colorcolumn=80
+" highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
 
 au BufNewFile,BufRead * setlocal formatoptions-=cro
 

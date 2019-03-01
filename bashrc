@@ -45,10 +45,12 @@ alias hs='runhaskell'
 alias clip='xclip -sel clip'
 alias clippng='xclip -sel clip -t image/png'
 alias pasteclip='xclip -o -sel clip'
+alias pasteclippng='xclip -o -sel clip -t image/png'
 alias chrome='google-chrome-stable'
 alias latexopen='~/dotfiles/bin/latex-open.sh'
 alias slatexopen='~/dotfiles/bin/synctex-latex-open.sh'
 alias gdb='gdb -q'
+alias za='zathura'
 
 # go() {
 # 	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then
@@ -60,8 +62,10 @@ alias gdb='gdb -q'
 # 	fi
 # }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+# THIS COMMAND TAKES HALF A SECOND TO RUN WHEN OPENING A NEW BASH SESSION
+# https://github.com/Microsoft/WSL/issues/776
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # if [[ $EUID -ne 0 ]]; then
 # 	tmux 2> /dev/null

@@ -5,8 +5,8 @@
 # ./install term
 # ./install gui
 
-termfiles='bashrc vimrc tmux.conf irbrc inputrc'
-guifiles='i3 i3status.conf terminator vrapperrc'
+termfiles='bashrc vimrc tmux.conf irbrc inputrc lesskey'
+guifiles='i3 i3status.conf terminator vrapperrc zathura'
 
 if [ "$1" == 'all' ]; then
 	files="$termfiles $guifiles"

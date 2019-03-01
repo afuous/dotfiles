@@ -1,0 +1,11 @@
+# to activate, run the command lesskey
+# lesskey transforms this textual config into a binary config that less reads
+
+# https://linux.die.net/man/1/lesskey
+# https://unix.stackexchange.com/a/59194
+
+# TODO: should these dotfiles automatically run lesskey anywhere?
+
+#command
+J	noaction 8j
+K	noaction 8k
