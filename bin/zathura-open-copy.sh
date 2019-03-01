@@ -7,9 +7,9 @@
 # WARNING: the linked manpage is wrong, it is bdelete not delbmark
 
 # TODO: send keys to window instead of typing directly
-# holding down control for too long causes issues (OPENS INFINITE ZATHURAS DO NOT DO THIS)
+# holding down control for too long causes issues
 
-temp=gjafsdnksahfasf
+temp=ytytytytyt
 
 pause() {
 	sleep 0.2
