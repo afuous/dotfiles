@@ -51,6 +51,7 @@ alias latexopen='~/dotfiles/bin/latex-open.sh'
 alias slatexopen='~/dotfiles/bin/synctex-latex-open.sh'
 alias gdb='gdb -q'
 alias za='zathura'
+alias mvdownload='~/dotfiles/bin/mvdownload.sh'
 
 # go() {
 # 	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then
