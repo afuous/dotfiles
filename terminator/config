@@ -24,7 +24,7 @@
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
-    custom_command = tmux
+    custom_command = tmux -L $(uuidgen)
     font = Mono 11
     scrollback_lines = 1000000
     scrollbar_position = hidden

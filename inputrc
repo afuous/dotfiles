@@ -6,3 +6,8 @@ Control-l: clear-screen
 set keymap vi-insert
 "jj":"\e"
 Control-l: clear-screen
+
+# https://stackoverflow.com/questions/7179642/how-can-i-make-bash-tab-completion-behave-like-vim-tab-completion-and-cycle-thro
+# TAB: menu-complete
+# "\e[Z": menu-complete-backward
+# set show-all-if-ambiguous on

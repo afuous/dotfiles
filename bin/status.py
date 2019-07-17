@@ -46,14 +46,14 @@ with os.popen('/usr/bin/i3status', mode='r') as status:
             'color': '#ffffff',
         })
 
-        mocp = str(subprocess.run(['mocp', '-i'], stdout=subprocess.PIPE).stdout)
-        spotify = subprocess.run(['spotify-now', '-p', 'a'], stdout=subprocess.PIPE).stdout
-        music = 'State: PLAY' in mocp or len(spotify) == 0
-        musicStatus = 'ON' if music else 'OFF'
-        arr.insert(0, {
-            'full_text': ' Music: ' + musicStatus + ' ',
-            'color': '#00ff00' if music else '#ff0000',
-        })
+        # mocp = str(subprocess.run(['mocp', '-i'], stdout=subprocess.PIPE).stdout)
+        # spotify = subprocess.run(['spotify-now', '-p', 'a'], stdout=subprocess.PIPE).stdout
+        # music = 'State: PLAY' in mocp or len(spotify) == 0
+        # musicStatus = 'ON' if music else 'OFF'
+        # arr.insert(0, {
+        #     'full_text': ' Music: ' + musicStatus + ' ',
+        #     'color': '#00ff00' if music else '#ff0000',
+        # })
 
         amixer = str(subprocess.run(['amixer', 'get', 'Capture'], stdout=subprocess.PIPE).stdout)
         mic = '[on]' in amixer

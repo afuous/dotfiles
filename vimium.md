@@ -18,7 +18,6 @@ map <c-d> scrollDown
 
 unmap i
 map <c-i> enterInsertMode
-map <c-k> passNextKey
 map i passNextKey
 
 unmap d

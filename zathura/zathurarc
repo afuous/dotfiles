@@ -15,3 +15,5 @@ map <A-x> navigate next
 map <A-z> navigate previous
 
 set selection-clipboard clipboard
+
+set guioptions sv

@@ -52,6 +52,7 @@ alias slatexopen='~/dotfiles/bin/synctex-latex-open.sh'
 alias gdb='gdb -q'
 alias za='zathura'
 alias mvdownload='~/dotfiles/bin/mvdownload.sh'
+alias youtubedownload='youtube-dl -x --audio-format mp3' # youtubedownload url
 
 # go() {
 # 	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then

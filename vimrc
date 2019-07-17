@@ -50,7 +50,7 @@ command! Tab8 set tabstop=8 shiftwidth=8
 Tabs
 au Filetype haskell,cabal,lhaskell Spaces2
 au Filetype cpp Spaces4
-au Filetype javascript,javascript.jsx Spaces2
+au Filetype javascript,javascript.jsx Spaces4
 au Filetype lisp Spaces2
 au Filetype markdown Spaces4
 au Filetype elm Spaces4
@@ -59,6 +59,9 @@ au Filetype dart Spaces2
 command! WriteSudo w !sudo cat > %
 
 " command! DeleteSwapFile echo expand('%:t')
+
+" prevent accidentally encrypting files
+cmap X<c-m> x<c-m>
 
 filetype plugin indent on
 set smartindent
@@ -117,8 +120,11 @@ nnoremap <cr> o<esc>
 nnoremap <C-a> <nop>
 nnoremap <C-x> <nop>
 au filetype elm nnoremap <leader>f :ElmFormat<enter>
+nnoremap <C-t> :NERDTreeTabsToggle<cr>
 
 nnoremap <c-@> :echo 'hi'<cr>
+
+xnoremap <c-g> d
 
 au filetype tex inoremap <c-j> \
 " au filetype tex inoremap <c-h> {
