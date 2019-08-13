@@ -90,7 +90,7 @@ nnoremap ; :
 vnoremap ; :
 " nnoremap , i_<esc>r
 nnoremap <leader>w J
-vnoremap <leader>a :w !xclip -sel clip<enter><enter>
+vnoremap <leader>a y:call system("xclip -sel clip", @")<cr>:echo<cr>
 " inoremap <C-j> <C-n>
 " vnoremap <leader>k :call Comment()<enter>
 " vnoremap <leader>l :call Uncomment()<enter>

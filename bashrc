@@ -16,6 +16,7 @@ prompt_command() {
 	local cyan="1;36"
 	local red="1;31"
 	local green="1;32"
+	local yellow="1;33"
 	local branch=$(git branch 2> /dev/null | grep '*' | cut -c 3-)
 	if [[ ! -z "$branch" ]]; then
 		branch=$(color "$green" "$branch")
@@ -27,14 +28,17 @@ prompt_command() {
 		fi
 		branch="$(color "$white" "(")${branch}$(color "$white" ")") "
 	fi
+	local venv=''
+	if [[ "$VIRTUAL_ENV" ]]; then
+		venv="$(color "$white" "(")$(color "$yellow" "venv")$(color "$white" ")") "
+	fi
 	local path="$(basename "$(dirname "$PWD")")/$(basename "$PWD")"
 	path=$(color "$cyan" "$path")
+	local chr="$(color "$white" '$')"
 	if [[ $EUID -eq 0 ]]; then
 		chr="$(color "$red" '#')"
-	else
-		chr="$"
 	fi
-	PS1="$(color "$white" "[")${branch}${path}$(color "$white" "]${chr}") "
+	PS1="$(color "$white" "[")${branch}${venv}${path}$(color "$white" "]")${chr} "
 }
 PROMPT_COMMAND=prompt_command
 
@@ -53,6 +57,10 @@ alias gdb='gdb -q'
 alias za='zathura'
 alias mvdownload='~/dotfiles/bin/mvdownload.sh'
 alias youtubedownload='youtube-dl -x --audio-format mp3' # youtubedownload url
+
+gitdiff() {
+	git diff --color $@ | less -R
+}
 
 # go() {
 # 	if [[ ! -e "$@" ]] || [[ -f "$@" ]]; then

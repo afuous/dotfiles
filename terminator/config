@@ -1,15 +1,15 @@
 [global_config]
   inactive_color_offset = 1.0
 [keybindings]
+  close_term = None
+  close_window = None
   new_tab = None
   next_tab = None
   prev_tab = None
+  search = None
   split_horiz = None
   split_vert = None
-  close_term = None
   toggle_scrollbar = None
-  search = None
-  close_window = None
 [layouts]
   [[default]]
     [[[child1]]]
@@ -24,7 +24,7 @@
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
-    custom_command = tmux -L $(uuidgen)
+    custom_command = tmux
     font = Mono 11
     scrollback_lines = 1000000
     scrollbar_position = hidden

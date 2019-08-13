@@ -30,15 +30,11 @@ font pango:monospace 12
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
-
 # need to remove ~/.cache/dmenu_run whenever anything in the path changes
 # bindsym $mod+d exec "PATH=$PATH:~/bin dmenu_run"
 
@@ -173,9 +169,8 @@ exec --no-startup-id xsetroot -solid '#000000'
 # put spotify back in 3 for if it is restarted
 # for_window [class="Spotify"] move container to workspace 3
 
-# open floating terminal
-bindsym Control+Mod1+z exec "terminator -T Floating_Terminator --geometry=893x596; sleep 4; wmctrl -r Floating_Terminator -T Terminator"
-for_window [class="Terminator" title="Floating_Terminator"] floating enable
+# open terminal
+bindsym $mod+Return exec "terminator -T Terminator --geometry=893x596"
 
 # switch to previous workspace
 # https://www.reddit.com/r/i3wm/comments/3o2bdn/i3_how_to_quickly_switch_between_current_and/cvtgpiy/
@@ -208,6 +203,9 @@ exec_always --no-startup-id "synclient CircScrollDelta=0.15" # default: 0.1, lar
 # requires networkmanager, nm-applet
 exec_always --no-startup-id "killall nm-applet; nm-applet"
 
+# requires blueman, and bluetooth service started
+exec_always --no-startup-id "killall blueman-applet; blueman-applet"
+
 # requires onboard
 # check "start onboard hidden" in its settings
 # the killall is there since if you start another instance, onboard does not start hidden for some reason
@@ -220,16 +218,15 @@ bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
 # https://old.reddit.com/r/i3wm/comments/7svdfw/is_it_possible_to_create_a_bindsym_on_the_mod_key/
 # bindsym $super exec "xdotool click 1"
 # bindcode 133 exec "xdotool click 1"
-# bindcode 133 exec "xdotool mousemove 1500 1000 click 1"
+# bindcode 133 exec "xdotool mousemove 1530 1000 click 1"
 
 # previous, next, and play/pause keys
 # requires playerctl
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
-exec_always --no-startup-id ~/dotfiles/bin/check-music.sh
-bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
-bindsym $mod+g exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
-bindsym XF86AudioPrev exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
-bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
+# bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
+bindsym $mod+g exec "$isabovemaxvolume && $headphonesin || if [ \\"$(pgrep spotify)\\" ]; then playerctl play-pause -p spotify; elif [ \\"$(pgrep rhythmbox)\\" ]; then playerctl play-pause -p rhythmbox; fi"
+# bindsym XF86AudioPrev exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
+# bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
 
 # adjust screen brightness
 # https://www.reddit.com/r/linux/comments/268wcy/managing_brightness_on_i3wm/

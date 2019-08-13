@@ -1,12 +1,25 @@
 #!/bin/bash
 
-if [[ -f ~/.currentmusicspotify ]]; then
-	query="$(spotify-now -i '%title %artist')"
-elif [[ -f ~/.currentmusicmoc ]]; then
-	query="$(mocp -i | grep '^File:' | sed -e 's/^.*\/\([^\/]\+\)\.mp3$/\1/g')"
+# first, figure out which player is playing
+for p in $(playerctl -l); do
+	if [ "$(playerctl status -p $p)" == 'Playing' ]; then
+		player=$p
+		break
+	fi
+done
+if [ ! $player ]; then
+	exit 1
 fi
 
-query="$(echo "$query" | sed -e 's/ /+/g' | sed -e 's/Remastered\(+Version\)\?//g')"
+# remove .mp3 from the end of the title
+# remove "remastered version" nonsense
+title="$(playerctl metadata title -p $player | sed \
+	-e 's/\(.*\)\.mp3/\1/' \
+	-e 's/Remastered\(+Version\)\?//' \
+)"
+artist="$(playerctl metadata artist -p $player)"
+
+query="$(echo "$title $artist" | sed -e 's/ /+/g')"
 
 url="https://search.azlyrics.com/search.php?q=$query"
 
