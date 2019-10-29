@@ -14,8 +14,10 @@ bluetooth="$(pactl info | grep 'Default Sink' | grep 'bluez')"
 
 if [[ "$bluetooth" ]]; then
 	maxvolume=150
-elif [[ "$headphonesin" ]] ; then
+elif [[ "$headphonesin" ]]; then
 	maxvolume=90
+else
+	maxvolume=300
 fi
 
 isbelowmaxvolume="$(echo "$(pamixer --get-volume)<$maxvolume" | bc | grep 1)"
