@@ -24,10 +24,9 @@
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
-    custom_command = tmux
     font = Mono 11
+    login_shell = True
     scrollback_lines = 1000000
     scrollbar_position = hidden
     show_titlebar = False
-    use_custom_command = True
     use_system_font = False

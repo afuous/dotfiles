@@ -2,6 +2,8 @@ set editing-mode vi
 
 set keymap vi-command
 Control-l: clear-screen
+v: ""
+/: ""
 
 set keymap vi-insert
 "jj":"\e"

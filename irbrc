@@ -88,6 +88,10 @@ def log(n)
 	Math.log(n)
 end
 
+def log(n, b)
+  Math.log(n, b)
+end
+
 def vector(x, y)
 	magnitude = Math.sqrt(x ** 2 + y ** 2)
 	puts "Magnitude: #{magnitude}"

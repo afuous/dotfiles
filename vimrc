@@ -67,7 +67,7 @@ filetype plugin indent on
 set smartindent
 
 set number
-set relativenumber
+" set relativenumber
 
 set ignorecase
 set smartcase
@@ -127,8 +127,6 @@ nnoremap <c-@> :echo 'hi'<cr>
 xnoremap <c-g> d
 
 au filetype tex inoremap <c-j> \
-" au filetype tex inoremap <c-h> {
-" au filetype tex inoremap <c-l> }
 au filetype tex inoremap ; $
 au filetype tex nnoremap r; r$
 au filetype tex nnoremap <leader>; a;<esc>

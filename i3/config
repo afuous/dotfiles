@@ -139,38 +139,37 @@ bindsym $mod+Shift+0 move container to workspace 10
 # client.unfocused #555555 #000000 #888888
 
 # audio stuff from https://faq.i3wm.org/question/125/how-to-change-the-systems-volume/
-# cannotchangevol prevents buttons on side of laptop from changing volume
-# requires bc
-# requires pamixer
-set $setvolume pactl set-sink-volume @DEFAULT_SINK@
-set $bigvol 10%
-set $smallvol 2%
-set $headphonesin [[ -z $(pactl list sinks | grep Headphones | grep 'not available') ]]
-set $isabovemaxvolume [[ $(echo $(pamixer --get-volume)'<90' | bc) -eq 0 ]]
-bindsym XF86AudioRaiseVolume exec $isabovemaxvolume && $headphonesin || $setvolume +$bigvol
-bindsym XF86AudioLowerVolume exec $setvolume -$bigvol
-bindsym $mod+XF86AudioRaiseVolume exec $isabovemaxvolume && $headphonesin || $setvolume +$smallvol
-bindsym $mod+XF86AudioLowerVolume exec $setvolume -$smallvol
-bindsym XF86AudioMute exec "if pactl list sinks | grep 'Mute: yes'; then pactl set-sink-mute 0 0; else pactl set-sink-mute 0 1; fi"
+# requires bc, pamixer, pactl
+bindsym XF86AudioRaiseVolume exec "~/dotfiles/bin/volume-change.sh 10"
+bindsym XF86AudioLowerVolume exec "~/dotfiles/bin/volume-change.sh -10"
+bindsym $mod+XF86AudioRaiseVolume exec "~/dotfiles/bin/volume-change.sh 2"
+bindsym $mod+XF86AudioLowerVolume exec "~/dotfiles/bin/volume-change.sh -2"
+bindsym XF86AudioMute exec "if pactl list sinks | grep 'Mute: no'; then for i in $(pactl list short sinks | cut -d' ' -f1); do pactl set-sink-mute $i 1; done; else for i in $(pactl list short sinks | cut -d' ' -f1); do pactl set-sink-mute $i 0; done; fi; killall -USR1 i3status"
 
 # toggle microphone mute
-bindsym $mod+b exec "amixer set Capture toggle"
+# https://faq.i3wm.org/question/854/how-to-force-status-bar-update/index.html
+bindsym $mod+b exec "amixer set Capture toggle; killall -USR1 i3status"
 
 # screenshots with xclip and scrot
 # https://faq.i3wm.org/question/6659/bindsym-for-screenshot-partially-not-working/
-bindsym Print exec "scrot -z ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
-# bindsym --release Control+Print exec "scrot -z --select &"
-# bindsym Shift+Print exec "scrot -z ~/TEMP_scrn.png && xclip -sel clip -t image/png TEMP_scrn.png && rm TEMP_scrn.png"
-bindsym --release Control+Shift+Print exec "scrot -z --select ~/TEMP_scrn.png; xclip -sel clip -t image/png TEMP_scrn.png; rm ~/TEMP_scrn.png"
+# bindsym Print exec "scrot -z ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
+# bindsym --release Control+Shift+Print exec "scrot -z --select ~/TEMP_scrn.png; xclip -sel clip -t image/png TEMP_scrn.png; rm ~/TEMP_scrn.png"
+# switched to imagemagick screenshotter
+bindsym Print exec "import -window root ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
+bindsym --release Control+Shift+Print exec "import /tmp/TEMP_scrn.png; xclip -sel clip -t image/png /tmp/TEMP_scrn.png; rm /tmp/TEMP_scrn.png"
 
 # set solid black desktop background
 exec --no-startup-id xsetroot -solid '#000000'
 
-# put spotify back in 3 for if it is restarted
-# for_window [class="Spotify"] move container to workspace 3
+# always put sound stuff in 3
+for_window [class="Spotify"] move container to workspace 3
+for_window [class="Pavucontrol"] move container to workspace 3
+for_window [class="Blueman-manager"] move container to workspace 3
 
 # open terminal
-bindsym $mod+Return exec "terminator -T Terminator --geometry=893x596"
+bindsym $mod+Return exec "terminator -T Terminator -e tmux --geometry=893x596"
+
+bindsym Control+$mod+z exec "xclip -o -sel clip | sed -e 's/invidio.us/youtube.com/g' | xclip -sel clip"
 
 # switch to previous workspace
 # https://www.reddit.com/r/i3wm/comments/3o2bdn/i3_how_to_quickly_switch_between_current_and/cvtgpiy/
@@ -196,15 +195,24 @@ exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
 # configure touchpad
 exec_always --no-startup-id "synclient MaxTapTime=0" # no tap to click
 exec_always --no-startup-id "synclient HorizTwoFingerScroll=1"
-exec_always --no-startup-id "synclient CircularScrolling=1"
+# exec_always --no-startup-id "synclient CircularScrolling=1"
+exec_always --no-startup-id "synclient CircularScrolling=0"
 exec_always --no-startup-id "synclient CircScrollTrigger=1" # top of mousepad only
 exec_always --no-startup-id "synclient CircScrollDelta=0.15" # default: 0.1, larger is slower
+exec_always --no-startup-id "synclient ClickFinger3=3" # default: 2
+
+# bindsym 1 exec "xdotool click 1"
+# bindsym 2 exec "xdotool click 3"
 
 # requires networkmanager, nm-applet
 exec_always --no-startup-id "killall nm-applet; nm-applet"
 
 # requires blueman, and bluetooth service started
 exec_always --no-startup-id "killall blueman-applet; blueman-applet"
+
+# requires notify-osd
+exec_always --no-startup-id "killall notify-osd; /usr/lib/notify-osd/notify-osd"
+# https://askubuntu.com/a/162647
 
 # requires onboard
 # check "start onboard hidden" in its settings
@@ -219,6 +227,7 @@ bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
 # bindsym $super exec "xdotool click 1"
 # bindcode 133 exec "xdotool click 1"
 # bindcode 133 exec "xdotool mousemove 1530 1000 click 1"
+# bindcode 133 exec "xdotool mousemove 1820 860 click 1"
 
 # previous, next, and play/pause keys
 # requires playerctl
@@ -231,8 +240,9 @@ bindsym $mod+g exec "$isabovemaxvolume && $headphonesin || if [ \\"$(pgrep spoti
 # adjust screen brightness
 # https://www.reddit.com/r/linux/comments/268wcy/managing_brightness_on_i3wm/
 # requires light
-bindsym $mod+minus exec "if [[ $(echo $(light -G)'<5' | bc) -eq 0 ]]; then light -U 5; fi"
-bindsym $mod+equal exec light -A 5
+# https://old.reddit.com/r/archlinux/comments/czia4v/cannot_change_backlight_brightness_since_last/
+bindsym $mod+minus exec "if [[ $(echo $(light -G)'<5' | bc) -eq 0 ]]; then light -U 5; killall -USR1 i3status; fi"
+bindsym $mod+equal exec "light -A 5; killall -USR1 i3status"
 # bindsym $mod+Shift+minus exec light -U 100
 
 bindsym Control+$mod+x exec --no-startup-id "google-chrome-stable --incognito"

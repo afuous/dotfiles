@@ -23,7 +23,7 @@ cmd() {
 	xdotool key Escape
 }
 
-echo hello
+# echo hello
 pause
 cmd "bmark $temp"
 pause
