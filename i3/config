@@ -233,7 +233,7 @@ bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
 # requires playerctl
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
 # bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
-bindsym $mod+g exec "$isabovemaxvolume && $headphonesin || if [ \\"$(pgrep spotify)\\" ]; then playerctl play-pause -p spotify; elif [ \\"$(pgrep rhythmbox)\\" ]; then playerctl play-pause -p rhythmbox; fi"
+bindsym $mod+g exec "if [ \\"$(pgrep spotify)\\" ]; then playerctl play-pause -p spotify; elif [ \\"$(pgrep rhythmbox)\\" ]; then playerctl play-pause -p rhythmbox; fi"
 # bindsym XF86AudioPrev exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
 # bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
 
