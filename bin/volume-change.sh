@@ -13,9 +13,12 @@ headphonesin="$(pactl list sinks | grep 'Headphones' | grep -v 'not available')"
 bluetooth="$(pactl info | grep 'Default Sink' | grep 'bluez')"
 
 if [[ "$bluetooth" ]]; then
-	maxvolume=150
+	# maxvolume=150
+	# maxvolume=200
+	maxvolume=300
 elif [[ "$headphonesin" ]]; then
-	maxvolume=90
+	# maxvolume=90
+	maxvolume=200
 else
 	maxvolume=300
 fi

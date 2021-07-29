@@ -3,7 +3,7 @@
 #
 
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+# [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
 
@@ -19,16 +19,19 @@ prompt_command() {
 	local green="1;32"
 	local yellow="1;33"
 
-	local branch=$(git branch 2> /dev/null | grep '*' | cut -c 3-)
-	if [[ ! -z "$branch" ]]; then
-		branch=$(color "$green" "$branch")
-		if [[ ! -z $(git status 2> /dev/null | grep '^Changes to be committed:$') ]]; then
-			branch="${branch}$(color "$red" "+")"
+	# if [ -z "$(df -T . | grep fuse\\.sshfs)" ]; then
+	if [ -z "$(df -T . | grep fuse)" ]; then
+		local branch=$(git branch 2> /dev/null | grep '*' | cut -c 3-)
+		if [[ ! -z "$branch" ]]; then
+			branch=$(color "$green" "$branch")
+			if [[ ! -z $(git status 2> /dev/null | grep '^Changes to be committed:$') ]]; then
+				branch="${branch}$(color "$red" "+")"
+			fi
+			if [[ ! -z $(git status 2> /dev/null | grep '^Changes not staged for commit:$') ]]; then
+				branch="${branch}$(color "$red" "*")"
+			fi
+			branch="$(color "$white" "(")${branch}$(color "$white" ")") "
 		fi
-		if [[ ! -z $(git status 2> /dev/null | grep '^Changes not staged for commit:$') ]]; then
-			branch="${branch}$(color "$red" "*")"
-		fi
-		branch="$(color "$white" "(")${branch}$(color "$white" ")") "
 	fi
 
 	local venv=''
@@ -36,12 +39,13 @@ prompt_command() {
 		venv="$(color "$white" "(")$(color "$yellow" "venv")$(color "$white" ")") "
 	fi
 
-	local dirname="$(basename "$PWD")"
-	if [ "$dirname" == '/' ]; then dirname=''; fi
-	local prevdirname="$(basename "$(dirname "$PWD")")"
-	if [ "$prevdirname" == '/' ]; then prevdirname=''; fi
-	local path="$prevdirname/$dirname"
-	path=$(color "$cyan" "$path")
+	# local dirname="$(basename "$PWD")"
+	# if [ "$dirname" == '/' ]; then dirname=''; fi
+	# local prevdirname="$(basename "$(dirname "$PWD")")"
+	# if [ "$prevdirname" == '/' ]; then prevdirname=''; fi
+	# local path="$prevdirname/$dirname"
+	# path=$(color "$cyan" "$path")
+	path=$(color "$cyan" "$(echo "$PWD" | sed -e "s/^\/home\/$USER\//~\//")")
 
 	local chr="$(color "$white" '$')"
 	if [[ $EUID -eq 0 ]]; then
@@ -67,6 +71,26 @@ alias gdb='gdb -q'
 alias za='zathura'
 alias mvdownload='~/dotfiles/bin/mvdownload.sh'
 alias youtubedownload='youtube-dl -f bestaudio' # youtubedownload url
+alias irb='irb --legacy' # multiline irb is very broken with readline, in reline gem in key_stroke.rb in expand method, lhs is an array of numbers [106, 106] for jj and expand returns nil
+# alias cparchive='cp -r --preserve=timestamps,links' # chmod -R -w directory
+# alias cparchive='rsync --recursive --append --progress --verbose --human-readable --times --links'
+alias cparchive='rsync -avv --no-D --progress' # add --append ?
+alias cpappend='rsync --recursive --append --progress --verbose --human-readable --links'
+# alias cpappend='rsync --recursive --append-verify --progress --verbose --human-readable --links'
+alias sudo='sudo '
+alias nohup='nohup '
+alias time='time '
+alias download='~/dotfiles/bin/download.sh'
+alias webcam='mplayer tv://'
+alias sizes='du -sch -- * | sort -h'
+alias forceumount='sudo umount -fl'
+alias ffmpeg='ffmpeg -hide_banner'
+alias ffprobe='ffprobe -hide_banner'
+alias ffplay='ffplay -hide_banner'
+alias subtitles='subliminal download -l en'
+alias imgur='~/dotfiles/bin/imgur/imgur.js'
+alias pdflatex='pdflatex -interaction nonstopmode'
+alias record='arecord -r 192000'
 
 gitdiff() {
 	git diff --color $@ | less -R
@@ -76,7 +100,16 @@ node() {
 	if [ $# -eq 0 ] && which rlwrap > /dev/null 2> /dev/null; then
 		NODE_NO_READLINE=1 rlwrap "$(which node)"
 	else
-		"$(which node)" $@
+		command node "$@"
+	fi
+}
+
+mpv() {
+	# only force window when run with no arguments
+	if [ $# -eq 0 ]; then
+		command mpv --force-window
+	else
+		command mpv --no-force-window "$@"
 	fi
 }
 
@@ -88,6 +121,16 @@ dotglob() {
 	else
 		echo 'Usage: dotglob or dotglob off'
 	fi
+}
+
+burniso() {
+	sudo dd bs=4M "if=$1" "of=$2" status=progress oflag=sync
+}
+
+portcheck() {
+	local ip="$1"
+	local port="$2"
+	nc -zvw3 "$ip" "$port"
 }
 
 # go() {
@@ -109,4 +152,5 @@ dotglob() {
 # 	tmux 2> /dev/null
 # fi
 
-export PATH="$HOME/.yarn/bin:$PATH"
+# export PATH="$HOME/.yarn/bin:$PATH"
+# export PATH="$PATH:$HOME/.yarn/bin"

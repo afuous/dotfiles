@@ -7,7 +7,7 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	call vundle#begin()
 
 	Plugin 'VundleVim/Vundle.vim'
-	Plugin 'Valloric/YouCompleteMe' " TODO: replace with deoplete
+	" Plugin 'Valloric/YouCompleteMe' " TODO: replace with deoplete
 	Plugin 'scrooloose/nerdtree'
 	Plugin 'jistr/vim-nerdtree-tabs'
 	Plugin 'pangloss/vim-javascript'
@@ -22,12 +22,14 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 		\ }
 	Plugin 'tomtom/tcomment_vim'
 	Plugin 'ntpeters/vim-better-whitespace'
+	Plugin 'Vimjas/vim-python-pep8-indent'
 	Plugin 'mattn/emmet-vim'
 	let g:user_emmet_leader_key='<C-f>'
 	Plugin 'tpope/vim-fireplace'
 	Plugin 'tpope/vim-classpath'
 	vnoremap <leader>f :Eval<cr>
 	Plugin 'reedes/vim-pencil'
+	Plugin 'vim-crystal/vim-crystal'
 
 	call vundle#end()
 endif
@@ -40,6 +42,9 @@ au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead *.purs set filetype=haskell
 au BufNewFile,BufRead *.idr set filetype=haskell
 "au BufNewFile,BufRead *.elm set filetype=haskell
+
+command! Line set cursorline
+command! LineOff set nocursorline
 
 command! Tabs set noexpandtab tabstop=4 shiftwidth=4
 command! Spaces2 set expandtab softtabstop=2 shiftwidth=2
@@ -140,6 +145,7 @@ nnoremap <leader>s :call SyncTex()<cr>
 
 colorscheme desert
 
+command! Eighty set colorcolumn=80
 " set colorcolumn=80
 " highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
 

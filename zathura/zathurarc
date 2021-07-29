@@ -2,14 +2,14 @@ unmap q
 unmap <C-q>
 
 map ; focus_inputbar ":"
-map <C-a> exec "/home/afuous/dotfiles/bin/zathura-open-copy.sh $FILE"
+map <C-a> exec "bash -c '~/dotfiles/bin/zathura-open-copy.sh $FILE'"
 
 # https://unix.stackexchange.com/questions/234744/can-zathuras-dual-page-mode-use-a-page-offset
 set first-page-column 1
 
 # feedkeys sends keystrokes
 
-map <C-O> feedkeys ":open /home/afuous/math/texts/"
+map <C-O> feedkeys ":open ~/math/texts/"
 
 map <A-x> navigate next
 map <A-z> navigate previous
@@ -17,3 +17,4 @@ map <A-z> navigate previous
 set selection-clipboard clipboard
 
 set guioptions sv
+# set guioptions ''

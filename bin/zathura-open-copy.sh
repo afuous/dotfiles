@@ -18,7 +18,7 @@ pause() {
 cmd() {
 	xdotool key colon
 	pause
-	xdotool type "$1"
+	xdotool type "$@"
 	xdotool key Return
 	xdotool key Escape
 }

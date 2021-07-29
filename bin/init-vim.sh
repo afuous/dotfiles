@@ -6,5 +6,5 @@ git clone https://github.com/VundleVim/Vundle.vim
 
 vim -c PluginInstall -c q -c q
 
-cd ~/.vim/bundle/YouCompleteMe
-./install.py
+# cd ~/.vim/bundle/YouCompleteMe
+# ./install.py

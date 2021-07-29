@@ -23,7 +23,8 @@ query="$(echo "$title $artist" | sed -e 's/ /+/g')"
 
 url="https://search.azlyrics.com/search.php?q=$query"
 
-curl -s -H 'User-Agent:' "$url" \
-	| grep '<a href=' \
-	| head -1 \
-	| sed -e 's/^.*href="\([^"]\+\)".*$/\1/'
+# curl -s -H 'User-Agent:' "$url" \
+# 	| grep '<a href=' \
+# 	| head -1 \
+# 	| sed -e 's/^.*href="\([^"]\+\)".*$/\1/'
+echo $url

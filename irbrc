@@ -50,6 +50,10 @@ class Integer
 	def fact
 		(1..self).reduce(1, :*)
 	end
+
+    def is_prime?
+      Prime.prime?(self)
+    end
 end
 
 def sin(a)
@@ -88,7 +92,7 @@ def log(n)
 	Math.log(n)
 end
 
-def log(n, b)
+def log(b, n)
   Math.log(n, b)
 end
 

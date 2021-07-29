@@ -34,7 +34,12 @@ floating_modifier $mod
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+# bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec rofi -show run -theme solarized
+# bindsym $mod+d exec rofi -show drun -theme solarized -show-icons
+# bindsym $mod+d exec "terminator -T Launcher -e 'bash /home/afuous/dotfiles/bin/launcher.sh' --geometry=893x596"
+# bindsym $mod+d exec "terminator -T Launcher -e 'bash /home/afuous/dotfiles/bin/launcher.sh' --geometry=1000x400"
+# for_window [class="[Tt]erminator" title="Launcher"] floating enable
 # need to remove ~/.cache/dmenu_run whenever anything in the path changes
 # bindsym $mod+d exec "PATH=$PATH:~/bin dmenu_run"
 
@@ -137,14 +142,24 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # client.unfocused #555555 #000000 #888888
+# client.focused_inactive #ff0000 #ff0000 #ff0000
+# https://old.reddit.com/r/i3wm/comments/ca7oz2/how_do_i_change_the_i3wm_color/et6fkbj/
+
+# this sucks
+# hide_edge_borders both
 
 # audio stuff from https://faq.i3wm.org/question/125/how-to-change-the-systems-volume/
 # requires bc, pamixer, pactl
 bindsym XF86AudioRaiseVolume exec "~/dotfiles/bin/volume-change.sh 10"
 bindsym XF86AudioLowerVolume exec "~/dotfiles/bin/volume-change.sh -10"
+# bindsym F3 exec "~/dotfiles/bin/volume-change.sh 10"
+# bindsym F2 exec "~/dotfiles/bin/volume-change.sh -10"
 bindsym $mod+XF86AudioRaiseVolume exec "~/dotfiles/bin/volume-change.sh 2"
 bindsym $mod+XF86AudioLowerVolume exec "~/dotfiles/bin/volume-change.sh -2"
+# bindsym $mod+F3 exec "~/dotfiles/bin/volume-change.sh 2"
+# bindsym $mod+F2 exec "~/dotfiles/bin/volume-change.sh -2"
 bindsym XF86AudioMute exec "if pactl list sinks | grep 'Mute: no'; then for i in $(pactl list short sinks | cut -d' ' -f1); do pactl set-sink-mute $i 1; done; else for i in $(pactl list short sinks | cut -d' ' -f1); do pactl set-sink-mute $i 0; done; fi; killall -USR1 i3status"
+# bindsym F1 exec "if pactl list sinks | grep 'Mute: no'; then for i in $(pactl list short sinks | cut -d' ' -f1); do pactl set-sink-mute $i 1; done; else for i in $(pactl list short sinks | cut -d' ' -f1); do pactl set-sink-mute $i 0; done; fi; killall -USR1 i3status"
 
 # toggle microphone mute
 # https://faq.i3wm.org/question/854/how-to-force-status-bar-update/index.html
@@ -155,8 +170,10 @@ bindsym $mod+b exec "amixer set Capture toggle; killall -USR1 i3status"
 # bindsym Print exec "scrot -z ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
 # bindsym --release Control+Shift+Print exec "scrot -z --select ~/TEMP_scrn.png; xclip -sel clip -t image/png TEMP_scrn.png; rm ~/TEMP_scrn.png"
 # switched to imagemagick screenshotter
-bindsym Print exec "import -window root ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
-bindsym --release Control+Shift+Print exec "import /tmp/TEMP_scrn.png; xclip -sel clip -t image/png /tmp/TEMP_scrn.png; rm /tmp/TEMP_scrn.png"
+bindsym Insert exec "import -window root ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
+bindsym --release Control+Shift+Insert exec "import /tmp/TEMP_scrn.png; xclip -sel clip -t image/png /tmp/TEMP_scrn.png; rm /tmp/TEMP_scrn.png"
+# bindsym Print exec "import -window root ~/screenshots/$(date +'%Y-%m-%d-%H:%M:%S').png"
+# bindsym --release Control+Shift+Print exec "import /tmp/TEMP_scrn.png; xclip -sel clip -t image/png /tmp/TEMP_scrn.png; rm /tmp/TEMP_scrn.png"
 
 # set solid black desktop background
 exec --no-startup-id xsetroot -solid '#000000'
@@ -167,9 +184,12 @@ for_window [class="Pavucontrol"] move container to workspace 3
 for_window [class="Blueman-manager"] move container to workspace 3
 
 # open terminal
-bindsym $mod+Return exec "terminator -T Terminator -e tmux --geometry=893x596"
+# bindsym $mod+Return exec "terminator -T Terminator -e tmux --geometry=893x596"
+# bindsym $mod+Return exec "terminator -T Terminator -e tmux --geometry=956x632"
+# bindsym $mod+Return exec "terminator -T Terminator -e tmux --geometry=956x642"
+bindsym $mod+Return exec "terminator -T Terminator -e tmux --geometry=992x662"
 
-bindsym Control+$mod+z exec "xclip -o -sel clip | sed -e 's/invidio.us/youtube.com/g' | xclip -sel clip"
+bindsym Control+$mod+z exec "xclip -o -sel clip | sed -e 's/^https\?:\/\/[^\/]\+\//https:\/\/www.youtube.com\//g' | xclip -sel clip"
 
 # switch to previous workspace
 # https://www.reddit.com/r/i3wm/comments/3o2bdn/i3_how_to_quickly_switch_between_current_and/cvtgpiy/
@@ -195,14 +215,17 @@ exec_always --no-startup-id "killall xcape; xcape -e 'Caps_Lock=Escape'"
 # configure touchpad
 exec_always --no-startup-id "synclient MaxTapTime=0" # no tap to click
 exec_always --no-startup-id "synclient HorizTwoFingerScroll=1"
-# exec_always --no-startup-id "synclient CircularScrolling=1"
 exec_always --no-startup-id "synclient CircularScrolling=0"
-exec_always --no-startup-id "synclient CircScrollTrigger=1" # top of mousepad only
-exec_always --no-startup-id "synclient CircScrollDelta=0.15" # default: 0.1, larger is slower
+# exec_always --no-startup-id "synclient CircularScrolling=1"
+# exec_always --no-startup-id "synclient CircScrollTrigger=1" # top of mousepad only
+# exec_always --no-startup-id "synclient CircScrollDelta=0.15" # default: 0.1, larger is slower
 exec_always --no-startup-id "synclient ClickFinger3=3" # default: 2
-
-# bindsym 1 exec "xdotool click 1"
-# bindsym 2 exec "xdotool click 3"
+exec_always --no-startup-id "synclient RightButtonAreaLeft=10000"
+exec_always --no-startup-id "xinput set-button-map 'TPPS/2 Elan TrackPoint' 1 0 3 4 5 6 7"
+exec_always --no-startup-id "killall fusuma; fusuma"
+# set $touchpadid $(xinput list | grep Touchpad | sed -e 's/.*id=\([0-9]\+\).*/\1/')
+# exec_always --no-startup-id "xinput set-prop $touchpadid 'libinput Click Method Enabled' {0,1}"
+# exec_always --no-startup-id "xinput set-prop $touchpadid 'libinput Disable While Typing Enabled' 0"
 
 # requires networkmanager, nm-applet
 exec_always --no-startup-id "killall nm-applet; nm-applet"
@@ -228,12 +251,16 @@ bindsym $mod+Shift+a exec "~/dotfiles/bin/lyrics.sh | xclip -sel clip"
 # bindcode 133 exec "xdotool click 1"
 # bindcode 133 exec "xdotool mousemove 1530 1000 click 1"
 # bindcode 133 exec "xdotool mousemove 1820 860 click 1"
+# bindsym $super exec terminator
+# bindsym Control+$mod+x exec "sleep 1; xdotool key Left"
+# bindsym Control+$mod+c exec "sleep 1; xdotool key Up"
 
 # previous, next, and play/pause keys
 # requires playerctl
 # https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
 # bindsym XF86AudioPlay exec "$isabovemaxvolume && $headphonesin && { mocp -P; playerctl pause; } || if [[ -f ~/.currentmusicspotify ]]; then playerctl play-pause; elif [[ -f ~/.currentmusicmoc ]]; then mocp -G; fi"
-bindsym $mod+g exec "if [ \\"$(pgrep spotify)\\" ]; then playerctl play-pause -p spotify; elif [ \\"$(pgrep rhythmbox)\\" ]; then playerctl play-pause -p rhythmbox; fi"
+# bindsym $mod+g exec "if [ \\"$(pgrep spotify)\\" ]; then playerctl play-pause -p spotify; elif [ \\"$(pgrep rhythmbox)\\" ]; then playerctl play-pause -p rhythmbox; else playerctl play-pause; fi"
+bindsym $mod+g exec "playerctl play-pause -p spotify"
 # bindsym XF86AudioPrev exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl previous; elif [[ -f ~/.currentmusicmoc ]]; then mocp -r; fi"
 # bindsym XF86AudioNext exec "$isabovemaxvolume && $headphonesin || if [[ -f ~/.currentmusicspotify ]]; then playerctl next; elif [[ -f ~/.currentmusicmoc ]]; then mocp -f; fi"
 
@@ -243,9 +270,14 @@ bindsym $mod+g exec "if [ \\"$(pgrep spotify)\\" ]; then playerctl play-pause -p
 # https://old.reddit.com/r/archlinux/comments/czia4v/cannot_change_backlight_brightness_since_last/
 bindsym $mod+minus exec "if [[ $(echo $(light -G)'<5' | bc) -eq 0 ]]; then light -U 5; killall -USR1 i3status; fi"
 bindsym $mod+equal exec "light -A 5; killall -USR1 i3status"
-# bindsym $mod+Shift+minus exec light -U 100
+bindsym $mod+shift+minus exec "light -U 1; killall -USR1 i3status"
+bindsym $mod+shift+equal exec "light -A 1; killall -USR1 i3status"
+# bindsym XF86MonBrightnessUp exec "light -A 5; killall -USR1 i3status"
+# bindsym XF86MonBrightnessDown exec "light -U 5; killall -USR1 i3status"
+# bindsym $mod+XF86MonBrightnessDown exec "light -U 1; killall -USR1 i3status"
+# bindsym $mod+XF86MonBrightnessUp exec "light -A 1; killall -USR1 i3status"
 
-bindsym Control+$mod+x exec --no-startup-id "google-chrome-stable --incognito"
+# bindsym Control+$mod+x exec --no-startup-id "google-chrome-stable --incognito"
 
 # you never really want to press alt f4 anyway
 bindsym Mod1+F4 exec :
@@ -273,7 +305,7 @@ bindsym Control+Mod1+Mod4+l exec ~/dotfiles/bin/lock-screen.sh
 
 # automatically lock screen after a duration of inactivity
 # requires xautolock
-exec_always --no-startup-id xautolock -time 20 -locker ~/dotfiles/bin/lock-screen.sh
+exec_always --no-startup-id "killall xautolock; xautolock -time 20 -locker ~/dotfiles/bin/lock-screen.sh &"
 
 # scratchpad
 bindsym $mod+Shift+u move scratchpad

@@ -6,7 +6,8 @@
 # ./install gui
 
 termfiles='bashrc vimrc tmux.conf irbrc inputrc lesskey'
-guifiles='i3 i3status.conf terminator vrapperrc zathura'
+# guifiles='i3 i3status.conf fusuma mpv terminator vrapperrc zathura'
+guifiles='i3 i3status.conf fusuma terminator vrapperrc zathura'
 
 if [ "$1" == 'all' ]; then
 	files="$termfiles $guifiles"
@@ -18,7 +19,7 @@ else
 	echo 'Invalid parameter'
 fi
 
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+here="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 
 olddir="$here/dotfiles-old"
 

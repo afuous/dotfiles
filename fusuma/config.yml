@@ -1,0 +1,32 @@
+swipe:
+  3:
+    up:
+      command: "i3-msg workspace prev"
+    down:
+      command: "i3-msg workspace next"
+    left:
+      command: "i3-msg focus left"
+    right:
+      command: "i3-msg focus right"
+  4:
+    left:
+      command: "xdotool key Control+Shift+Tab"
+    right:
+      command: "xdotool key Control+Tab"
+    up:
+      command: "i3-msg focus up"
+    down:
+      command: "i3-msg focus down"
+    # up:
+    #   command: "xdotool click --repeat 100 -delay 5 4"
+    # down:
+    #   command: "xdotool click --repeat 100 -delay 5 5"
+# pinch:
+#   out: # actually in
+#     command: "xdotool key Escape"
+threshold:
+  # swipe: 0.25
+  swipe: 0.5
+interval:
+  swipe: 0.5
+  # pinch: 0.5

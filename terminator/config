@@ -1,15 +1,25 @@
 [global_config]
+  extra_styling = False
   inactive_color_offset = 1.0
 [keybindings]
-  close_term = None
-  close_window = None
   new_tab = None
-  next_tab = None
-  prev_tab = None
-  search = None
   split_horiz = None
   split_vert = None
+  close_term = None
   toggle_scrollbar = None
+  search = None
+  close_window = None
+  next_tab = None
+  prev_tab = None
+[profiles]
+  [[default]]
+    cursor_color = "#aaaaaa"
+    font = Mono 11
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_lines = 1000000
+    login_shell = True
+    use_system_font = False
 [layouts]
   [[default]]
     [[[child1]]]
@@ -21,12 +31,3 @@
       profile = None
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    cursor_color = "#aaaaaa"
-    font = Mono 11
-    login_shell = True
-    scrollback_lines = 1000000
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_system_font = False
