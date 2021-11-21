@@ -30,6 +30,7 @@ if 1 - empty(glob("~/.vim/bundle/Vundle.vim"))
 	vnoremap <leader>f :Eval<cr>
 	Plugin 'reedes/vim-pencil'
 	Plugin 'vim-crystal/vim-crystal'
+	Plugin 'othree/jsdoc-syntax.vim'
 
 	call vundle#end()
 endif
@@ -93,6 +94,7 @@ inoremap Jj <esc>
 inoremap jJ <esc>
 nnoremap ; :
 vnoremap ; :
+nnoremap <leader>; ;
 " nnoremap , i_<esc>r
 nnoremap <leader>w J
 vnoremap <leader>a y:call system("xclip -sel clip", @")<cr>:echo<cr>

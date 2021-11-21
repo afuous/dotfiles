@@ -91,6 +91,8 @@ alias subtitles='subliminal download -l en'
 alias imgur='~/dotfiles/bin/imgur/imgur.js'
 alias pdflatex='pdflatex -interaction nonstopmode'
 alias record='arecord -r 192000'
+alias hashrecursive='~/dotfiles/bin/hashrecursive.sh'
+alias jsonformat='~/dotfiles/bin/jsonformat.js'
 
 gitdiff() {
 	git diff --color $@ | less -R

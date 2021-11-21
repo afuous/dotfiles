@@ -12,19 +12,19 @@
 let clientId = require("fs").readFileSync(require("path").join(__dirname, "imgurclientid"));
 
 let req = require("https").request("https://api.imgur.com/3/image?client_id=" + clientId, {
-	method: "POST",
+    method: "POST",
 }, res => {
-	let output = "";
+    let output = "";
     res.on("data", data => {
         output += data;
     });
-	res.on("end", () => {
-		let link = JSON.parse(output).data.link;
+    res.on("end", () => {
+        let link = JSON.parse(output).data.link;
         console.log(link);
         let proc = require("child_process").spawn("xsel", ["-i", "--clipboard"]);
         proc.stdin.write(link);
         proc.stdin.end();
-	});
+    });
 });
 
 let proc = require("child_process").spawn("xclip", ["-o", "-sel", "clip", "-t", "image/png"]);
